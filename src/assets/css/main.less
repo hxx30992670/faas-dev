@@ -15,30 +15,35 @@ body,
 #root,
 .App {
   height: 100%;
+}
 
-  .main-menu {
-    background: #001529;
+.App {
+  box-sizing: border-box;
+  padding: 20px;
+}
 
-    .ant-menu-submenu-title {
-      color: #fff;
+.main-menu {
+  background: #001529;
+
+  .ant-menu-submenu-title {
+    color: #fff;
+  }
+
+  .ant-menu {
+    background: #001529 !important;
+    color: #fff;
+
+    .ant-menu-item {
+      a {
+        color: #fff;
+      }
     }
 
-    .ant-menu {
-      background: #001529 !important;
-      color: #fff;
+    .ant-menu-item-selected {
+      background: rgb(57, 71, 107);
 
-      .ant-menu-item {
-        a {
-          color: #fff;
-        }
-      }
-
-      .ant-menu-item-selected {
-        background: rgb(57, 71, 107);
-
-        a {
-          color: #1890ff;
-        }
+      a {
+        color: #1890ff;
       }
     }
   }

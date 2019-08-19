@@ -3,6 +3,7 @@ import Style from './style.module.less';
 import { Layout, Button } from 'antd';
 import { RouteComponentProps, Switch, Route, Redirect } from "react-router-dom";
 import moment from "moment";
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import MainMenu from "../MainMenu/index";
 import FileCollection from "src/views/DataManager/DataCollection/FileCollection/index";
 import InterfaceRegister from 'src/views/DataManager/DataCollection/IntefaceRegister/index';
@@ -69,16 +70,28 @@ class MainTemplate extends React.Component<IMainTemplateProps, IMainTemplateStat
             <MainMenu role={1} />
           </Sider>
           <Content>
-            <Switch>
-              <Redirect exact={true} path={`${match.path}`} to={`${match.path}/file-collection`} />
-              <Route path={`${match.path}/file-collection`} component={FileCollection} />
-              <Route path={`${match.path}/interface-register`} component={InterfaceRegister} />
-              <Route path={`${match.path}/table-sync`} component={TableSync} />
-              <Route path={`${match.path}/data-list`} component={DataList} />
-              <Route path={`${match.path}/category-manager`} component={CategoryManager} />
-              <Route path={`${match.path}/government-list`} component={GovernmentList} />
-              <Route path={`${match.path}/data-trace`} component={DataTrace} />
-            </Switch>
+            <TransitionGroup
+              className='App'
+            >
+              <CSSTransition
+                key={this.props.location.pathname}
+                classNames='transform'
+                timeout={500}
+
+              >
+                <Switch location={this.props.location}>
+                  <Redirect exact={true} path={`${match.path}`} to={`${match.path}/file-collection`} />
+                  <Route path={`${match.path}/file-collection`} component={FileCollection} />
+                  <Route path={`${match.path}/interface-register`} component={InterfaceRegister} />
+                  <Route path={`${match.path}/table-sync`} component={TableSync} />
+                  <Route path={`${match.path}/data-list`} component={DataList} />
+                  <Route path={`${match.path}/category-manager`} component={CategoryManager} />
+                  <Route path={`${match.path}/government-list`} component={GovernmentList} />
+                  <Route path={`${match.path}/data-trace`} component={DataTrace} />
+                </Switch>
+              </CSSTransition>
+            </TransitionGroup>
+
           </Content>
         </Layout>
       </Layout>

@@ -74,7 +74,7 @@ class MainMenu extends React.Component<IMainMenuProps, IMainMenuState> {
               name: '数据列表'
             },
             {
-              path: '/data-manager/catagory-manager',
+              path: '/data-manager/category-manager',
               name: '目录管理'
             }
           ]
@@ -110,8 +110,6 @@ class MainMenu extends React.Component<IMainMenuProps, IMainMenuState> {
         }
       }
     });
-    console.log(this.props.location.pathname);
-    console.log(bOn);
     if (!bOn) {
       this.props.history.replace('/login');
     }
@@ -122,7 +120,6 @@ class MainMenu extends React.Component<IMainMenuProps, IMainMenuState> {
   }
 
   public render() {
-    console.log(this.props);
     const { menuList, openKeys } = this.state;
     const { currentRoute } = this.props;
     return (

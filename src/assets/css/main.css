@@ -15,41 +15,27 @@ body,
 .App {
   height: 100%;
 }
-html .main-menu,
-body .main-menu,
-#root .main-menu,
-.App .main-menu {
+.App {
+  box-sizing: border-box;
+  padding: 20px;
+}
+.main-menu {
   background: #001529;
 }
-html .main-menu .ant-menu-submenu-title,
-body .main-menu .ant-menu-submenu-title,
-#root .main-menu .ant-menu-submenu-title,
-.App .main-menu .ant-menu-submenu-title {
+.main-menu .ant-menu-submenu-title {
   color: #fff;
 }
-html .main-menu .ant-menu,
-body .main-menu .ant-menu,
-#root .main-menu .ant-menu,
-.App .main-menu .ant-menu {
+.main-menu .ant-menu {
   background: #001529 !important;
   color: #fff;
 }
-html .main-menu .ant-menu .ant-menu-item a,
-body .main-menu .ant-menu .ant-menu-item a,
-#root .main-menu .ant-menu .ant-menu-item a,
-.App .main-menu .ant-menu .ant-menu-item a {
+.main-menu .ant-menu .ant-menu-item a {
   color: #fff;
 }
-html .main-menu .ant-menu .ant-menu-item-selected,
-body .main-menu .ant-menu .ant-menu-item-selected,
-#root .main-menu .ant-menu .ant-menu-item-selected,
-.App .main-menu .ant-menu .ant-menu-item-selected {
+.main-menu .ant-menu .ant-menu-item-selected {
   background: #39476b;
 }
-html .main-menu .ant-menu .ant-menu-item-selected a,
-body .main-menu .ant-menu .ant-menu-item-selected a,
-#root .main-menu .ant-menu .ant-menu-item-selected a,
-.App .main-menu .ant-menu .ant-menu-item-selected a {
+.main-menu .ant-menu .ant-menu-item-selected a {
   color: #1890ff;
 }
 .route-enter {

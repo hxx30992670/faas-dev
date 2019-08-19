@@ -1,4 +1,4 @@
-import { CHANGECURRENTROUTE } from '../constants/index';
+import { CHANGECURRENTROUTE, CHANGELOADING } from '../constants/index';
 
 
 export interface CHANGECURRENTROUTEAction {
@@ -6,9 +6,18 @@ export interface CHANGECURRENTROUTEAction {
   payload: string
 }
 
-export type MofilyAction = CHANGECURRENTROUTEAction;
+export interface CHANGELOADINGAction {
+  type: CHANGELOADING,
+  payload: boolean
+}
+
+export type MofilyAction = CHANGECURRENTROUTEAction | CHANGELOADINGAction;
 
 export const changeRoute = (payload: string): CHANGECURRENTROUTEAction => ({
   type: CHANGECURRENTROUTE,
+  payload
+});
+export const changeLoading = (payload: boolean): CHANGELOADINGAction => ({
+  type: CHANGELOADING,
   payload
 });
