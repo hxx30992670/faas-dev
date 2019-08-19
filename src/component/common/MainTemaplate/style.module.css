@@ -1,0 +1,33 @@
+.container {
+  height: 100%;
+}
+.container .custom-header {
+  background: #516bc0;
+}
+.container .custom-header .header-wrap {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.container .custom-header .header-wrap .title {
+  color: #fff;
+  font-size: 26px;
+}
+.container .custom-header .header-wrap .login-info {
+  display: flex;
+  font-size: 16px;
+  align-items: center;
+}
+.container .custom-header .header-wrap .login-info .time {
+  color: #fff;
+  margin-right: 20px;
+}
+.container .custom-header .header-wrap .login-info .current-login {
+  margin-right: 10px;
+  color: #fff;
+}
+.container .custom-header .header-wrap .login-info .logout-link {
+  color: #fff;
+  font-size: 16px;
+}

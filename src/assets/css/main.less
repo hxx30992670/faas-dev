@@ -1,0 +1,126 @@
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+ul,
+ol,
+p {
+  margin: 0;
+}
+
+html,
+body,
+#root,
+.App {
+  height: 100%;
+
+  .main-menu {
+    background: #001529;
+
+    .ant-menu-submenu-title {
+      color: #fff;
+    }
+
+    .ant-menu {
+      background: #001529 !important;
+      color: #fff;
+
+      .ant-menu-item {
+        a {
+          color: #fff;
+        }
+      }
+
+      .ant-menu-item-selected {
+        background: rgb(57, 71, 107);
+
+        a {
+          color: #1890ff;
+        }
+      }
+    }
+  }
+}
+
+
+.route-enter {
+  opacity: 0.01;
+  transform: translateX(-100%);
+}
+
+.router-enter-done {
+  transition: 300ms;
+}
+
+.route-enter-active {
+  opacity: 1;
+  transition: 500ms;
+}
+
+.route-exit {
+  opacity: 1;
+}
+
+.route-exit-done {
+  transition: 300ms;
+}
+
+.router-exit-active {
+  opacity: 0;
+  transition: 500ms;
+}
+
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-done {
+  opacity: 1;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 1s ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-done {
+  opacity: 0;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 1s ease-in
+}
+
+.transform-enter {
+  transform: translateX(-100%);
+}
+
+.transform-enter-done {
+  transform: translateX(0);
+}
+
+.transform-enter-active {
+  transform: translateX(0);
+  transition: transform .5s ease-in;
+}
+
+.transform-exit {
+  transform: translateX(0);
+}
+
+.transform-exit-active {
+  transform: translateX(100%);
+  transition: transform .5s ease-in;
+}
+
+.transform-exit-done {
+  transform: translateX(100%);
+
+}
