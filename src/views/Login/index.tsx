@@ -23,7 +23,7 @@ export default class Login extends React.Component<ILoginProps, ILoginState> {
       <div className={style.container}>
         <div className={style.loginWrap}>
           <h3 className={style.title}>跨部门大数据应用平台</h3>
-          <LoginForm />
+          <LoginForm {...this.props} />
         </div>
       </div>
     );

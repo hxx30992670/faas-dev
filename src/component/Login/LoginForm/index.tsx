@@ -5,10 +5,14 @@ import { connect } from 'react-redux';
 import style from './style.module.less';
 import { StoreState } from 'src/types/index';
 import request from 'src/utils/Request';
-
-export interface ILoginFormProps extends FormComponentProps {
+import LocalSave from 'src/utils/LocalSave';
+import {RouteComponentProps} from 'react-router-dom';
+interface ILoginFormProps extends FormComponentProps {
   loading: boolean,
-  loadingTitle: string
+  loadingTitle: string,
+}
+interface ILoginFormProps extends RouteComponentProps {
+
 }
 export interface ILoginFormState {
   code: string,
@@ -154,7 +158,12 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
           password: values.password
         }, { loading: true, loadingTitle: '登陆中……' });
         if (status === 200) {
-          console.log(data);
+          LocalSave.saveSession('userInfo', data);
+          const {mt} = data;
+          console.log(mt);
+          if((mt as string).startsWith("data_admin")) {
+            this.props.history.push('/data-manager');
+          }
         } else {
           message.warning(msg);
         }

@@ -16,6 +16,7 @@ import { changeRoute } from "src/actions";
 import { connect } from 'react-redux';
 import { StoreState } from 'src/types';
 import { Dispatch } from 'redux';
+import LocalSave from 'src/utils/LocalSave';
 const { Header, Sider, Content } = Layout;
 
 const mapStateToProps = (state: StoreState) => ({
@@ -32,8 +33,7 @@ export interface IMainTemplateProps extends RouteComponentProps {
 }
 
 export interface IMainTemplateState {
-  isIn?: boolean,
-  address?: string,
+  userInfo: any
 }
 
 
@@ -41,11 +41,25 @@ export interface IMainTemplateState {
 class MainTemplate extends React.Component<IMainTemplateProps, IMainTemplateState> {
   constructor(props: IMainTemplateProps) {
     super(props);
+    this.state = {
+      userInfo: {
+        mt: ''
+      }
+    }
   }
   public shouldComponentUpdate(prevProps: IMainTemplateProps, prevState: IMainTemplateState) {
     prevProps.onChangeMenuSelect(this.props.location.pathname);
     return true;
   }
+
+  public componentDidMount() {
+    // const {userInfo} = this.state;
+    const userSession = LocalSave.getSession('userInfo', true);
+    this.setState({
+      userInfo: userSession
+    })
+  }
+
   public render() {
     const { match } = this.props;
     return (
@@ -59,9 +73,9 @@ class MainTemplate extends React.Component<IMainTemplateProps, IMainTemplateStat
               <p className={Style.time}>{moment().format('YYYY-MM-DD dddd')}</p>
               <p className={Style.currentLogin}>
                 <span>管理员：</span>
-                <span>Data</span>
+                <span>{this.state.userInfo.account}</span>
               </p>
-              <Button type='link' className={Style.logoutLink}>注销</Button>
+              <Button type='link' className={Style.logoutLink} onClick={this.outLogin}>注销</Button>
             </div>
           </div>
         </Header>
@@ -97,7 +111,9 @@ class MainTemplate extends React.Component<IMainTemplateProps, IMainTemplateStat
       </Layout>
     );
   }
-  public testButton = () => {
+  public outLogin = () => {
+    window.sessionStorage.clear();
+    this.props.history.push('/login');
   }
   public showBox = () => {
 
