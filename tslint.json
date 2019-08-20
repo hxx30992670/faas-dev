@@ -19,6 +19,7 @@
     "only-arrow-functions": false,
     "no-implicit-dependencies": false,
     "no-var-requires": false,
-    "interface-name": false
+    "interface-name": false,
+    "no-string-literal": false
   }
 }

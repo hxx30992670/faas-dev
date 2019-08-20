@@ -1,6 +1,7 @@
 export interface IStoreType {
   currentRoute: string,
-  loading: boolean
+  loading: boolean,
+  loadingTitle: string
 }
 
 export type StoreState = IStoreType;

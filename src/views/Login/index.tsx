@@ -1,6 +1,7 @@
 import * as React from 'react';
-import * as style from './style.module.less';
 import { RouteComponentProps } from "react-router-dom";
+import LoginForm from 'src/component/Login/LoginForm/index';
+import style from './style.module.less';
 
 export interface ILoginProps extends RouteComponentProps {
 
@@ -20,7 +21,10 @@ export default class Login extends React.Component<ILoginProps, ILoginState> {
     console.log(this.props.match.path === '/login');
     return (
       <div className={style.container}>
-        Login页
+        <div className={style.loginWrap}>
+          <h3 className={style.title}>跨部门大数据应用平台</h3>
+          <LoginForm />
+        </div>
       </div>
     );
   }
