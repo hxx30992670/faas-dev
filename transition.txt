@@ -1,0 +1,15 @@
+<TransitionGroup
+        className='App'
+      >
+        <CSSTransition
+          key={this.props.location.pathname}
+          classNames='transform'
+          timeout={500}
+
+        >
+          <Switch location={this.props.location}>
+            <Route path='/' exact={true} component={MainTemplate} />
+            <Route path='/login' component={Login} />
+          </Switch>
+        </CSSTransition>
+      </TransitionGroup>

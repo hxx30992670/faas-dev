@@ -1,0 +1,17 @@
+.container {
+  padding: 0 10px;
+}
+.container .code-wrap {
+  display: flex;
+}
+.container .code-wrap img {
+  margin-left: 20px;
+}
+.container .submit-box {
+  padding-top: 20px;
+  text-align: center;
+  padding-bottom: 20px;
+}
+.container .submit-box button {
+  margin-right: 15px;
+}
