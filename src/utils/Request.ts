@@ -10,11 +10,8 @@ const TimeOut = 5 * 60 * 1000;
 
 const request = async (url: string, options: any) => {
   const userInfo: any = LocalSave.getSession('userInfo', true);
-  if (userInfo.mt) {
-    console.log(userInfo);
+  if (userInfo && userInfo.mt) {
     options.headers['mt'] = userInfo.mt;
-    console.log(options.headers);
-    console.log(userInfo.mt);
   }
   if (options.loading) {
     Store.dispatch({
@@ -36,9 +33,9 @@ const request = async (url: string, options: any) => {
     timeout: TimeOut,
     headers: options.headers
   }).then(({ data }) => {
-    // if (Number(data.status) === 401) {
-    //   window.location.href = '/login';
-    // }
+    if (Number(data.status) === 401) {
+      window.location.href = '/login';
+    }
     if (options.loading) {
       Store.dispatch({
         type: CHANGELOADING,

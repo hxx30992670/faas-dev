@@ -17,7 +17,17 @@ body,
 }
 .App {
   box-sizing: border-box;
+  padding: 20px;
+  position: relative;
+}
+.App .ant-tabs-bar {
+  margin-bottom: 0;
+}
+.App .ant-tabs-tabpane {
   background: #fff;
+}
+.App .ant-tabs-tabpane .tabs-wrap {
+  padding: 15px;
 }
 .main-menu {
   background: #001529;
@@ -88,6 +98,10 @@ body,
 .transform-enter-active {
   transform: translateX(0);
   transition: transform 0.5s ease-in;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 20px;
 }
 .transform-exit {
   transform: translateX(0);
@@ -95,6 +109,10 @@ body,
 .transform-exit-active {
   transform: translateX(100%);
   transition: transform 0.5s ease-in;
+  position: absolute;
+  left: 0;
+  top: 20px;
+  width: 100%;
 }
 .transform-exit-done {
   transform: translateX(100%);

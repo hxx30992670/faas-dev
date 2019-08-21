@@ -1,0 +1,11 @@
+.container {
+  padding: 10px;
+}
+.container .upload-wrap {
+  display: flex;
+  align-items: center;
+}
+.container .upload-wrap .tips {
+  color: #e6a23c;
+  margin-left: 15px;
+}

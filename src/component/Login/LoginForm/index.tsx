@@ -6,7 +6,7 @@ import style from './style.module.less';
 import { StoreState } from 'src/types/index';
 import request from 'src/utils/Request';
 import LocalSave from 'src/utils/LocalSave';
-import {RouteComponentProps} from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 interface ILoginFormProps extends FormComponentProps {
   loading: boolean,
   loadingTitle: string,
@@ -159,12 +159,13 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
         }, { loading: true, loadingTitle: '登陆中……' });
         if (status === 200) {
           LocalSave.saveSession('userInfo', data);
-          const {mt} = data;
+          const { mt } = data;
           console.log(mt);
-          if((mt as string).startsWith("data_admin")) {
+          if ((mt as string).startsWith("data_admin")) {
             this.props.history.push('/data-manager');
           }
         } else {
+          this.getCode();
           message.warning(msg);
         }
       }
