@@ -20,6 +20,7 @@
     "no-implicit-dependencies": false,
     "no-var-requires": false,
     "interface-name": false,
-    "no-string-literal": false
+    "no-string-literal": false,
+    "jsx-no-string-ref": false
   }
 }

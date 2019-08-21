@@ -1,28 +1,36 @@
 import * as React from 'react';
-import { Form, Cascader, message as Message, Button, Upload, Icon } from 'antd';
+import { Form, Cascader, message as Message, Button, Upload, Icon, Input } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import { UploadChangeParam } from "antd/lib/upload";
 import style from './style.module.less';
 import request from "src/utils/Request";
 import localSave from "src/utils/LocalSave";
+import FieldTable from '../FieldTable/index';
 
 export interface IFileFormProps extends FormComponentProps {
+  
 }
 
 interface IFileFormState {
   categoryList: any[],
-  fileList: any[]
+  fileList: any[],
+  fieldList: any[],
+  dataPrview: any[],
+  
 }
 
-class FileForm extends React.Component<IFileFormProps, IFileFormState> {
+class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
+  public fieldEl: any;
   constructor(props) {
     super(props);
     this.state = {
       categoryList: [],
-      fileList: []
+      fileList: [],
+      fieldList: [],
+      dataPrview: []
     }
-  }
 
+  }
   public componentDidMount() {
     this.getCatalogList();
   }
@@ -55,6 +63,7 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState> {
         mt: localSave.getSession('userInfo', true).mt
       }
     };
+    // const getFieldRef = (el) => this.fieldEl = el;
     return (
       <div className={style.container}>
         <Form {...formItemLayout}>
@@ -75,22 +84,83 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState> {
             }
           </Form.Item>
           <Form.Item label='选择上传文件'>
-            <Upload {...props} fileList={this.state.fileList}
-              beforeUpload={this.beforUpload}
-            >
-              <div className={style.uploadWrap}>
-                <Button type='primary'>
-                  <Icon type="upload" /> 选择文件
-                </Button>
-                <p className={style.tips}>*只能上传CSV和Excel(xls.xlsx)文件,大小不可超过20M</p>
-              </div>
-            </Upload>
+            <div className={style.formRow}>
+              <Upload {...props} fileList={this.state.fileList}
+                beforeUpload={this.beforUpload}
+                className={style.customUpload}
+              >
+                <div className={style.uploadWrap}>
+                  <Button type='primary'>
+                    <Icon type="upload" /> 选择文件
+                  </Button>
+                  <p className={style.tips}>*只能上传CSV和Excel(xls.xlsx)文件,大小不可超过20M</p>
+                </div>
+              </Upload>
+              {
+                this.state.fieldList.length ? <Button type='link'>数据预览</Button> : ''
+              }
+            </div>
+            {
+              this.state.fieldList.length ? <FieldTable {...this.props} fieldList={this.state.fieldList} /> : ''
+            }
           </Form.Item>
-          <div>
+          <Form.Item label='数据名称'>
+            {
+              getFieldDecorator("dataName", {
+                validateTrigger: ["onBlur"],
+                rules: [
+                  { required: true, message: '数据名称不能为空' },
+                  { max: 64, message: '数据名称长度不能超过64' }
+                ]
+              })(
+                <Input />
+              )
+            }
+          </Form.Item>
+          <Form.Item label='数据描述'>
+            {
+              getFieldDecorator("dataDescription", {
+                validateTrigger: ["onBlur"],
+                rules: [
+                  { required: true, message: '数据描述不能为空' },
+                  { max: 100, message: '数据描述长度不能超过100' }
+                ]
+              })(
+                <Input />
+              )
+            }
+          </Form.Item>
+          <Form.Item label='数据用途'>
+            {
+              getFieldDecorator("dataUse", {
+                validateTrigger: ["onBlur"],
+                rules: [
+                  { required: true, message: '数据用途不能为空' },
+                  { max: 64, message: '数据描述长度不能超过64' }
+                ]
+              })(
+                <Input />
+              )
+            }
+          </Form.Item>
+          <Form.Item label='所属系统'>
+            {
+              getFieldDecorator("dataSource", {
+                validateTrigger: ["onBlur"],
+                rules: [
+                  { required: true, message: '所属系统不能为空' },
+                  { max: 64, message: '所属系统长度不能超过64' }
+                ]
+              })(
+                <Input />
+              )
+            }
+          </Form.Item>
+          <Form.Item label=' ' colon={false}>
             <Button onClick={this.validateField}>
-              按钮
+              提交
             </Button>
-          </div>
+          </Form.Item>
         </Form>
       </div>
     );
@@ -113,14 +183,21 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState> {
     }
   }
 
-  private validateField = () => {
+  private validateField: () => void = () => {
     const { validateFields } = this.props.form;
-
+    // console.log(this.fieldEl);
+    this.fieldEl.validateTable();
     validateFields((error, value) => {
       if (error) {
         Message.error('按规则完善所有字段');
       } else {
+        const { fileList } = this.state;
+        if (!fileList.length) {
+          Message.warning('没有上传文件');
+          return;
+        }
         console.log(value);
+        console.log(this.state.fieldList);
       }
     })
   }
@@ -132,6 +209,10 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState> {
     fileList = fileList.map(file => {
       if (file.response && file.response.status === 200) {
         file.url = file.response.data.address;
+        console.log(file);
+        this.setState({
+          fieldList: file.response.data.directoryEntityList
+        });
       }
       return file;
     });
