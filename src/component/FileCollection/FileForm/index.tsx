@@ -6,9 +6,10 @@ import style from './style.module.less';
 import request from "src/utils/Request";
 import localSave from "src/utils/LocalSave";
 import FieldTable from '../FieldTable/index';
+import { portForm } from "../FieldTable/table";
 
 export interface IFileFormProps extends FormComponentProps {
-  
+
 }
 
 interface IFileFormState {
@@ -16,11 +17,11 @@ interface IFileFormState {
   fileList: any[],
   fieldList: any[],
   dataPrview: any[],
-  
+
 }
 
 class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
-  public fieldEl: any;
+  public fieldEl;
   constructor(props) {
     super(props);
     this.state = {
@@ -101,7 +102,8 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
               }
             </div>
             {
-              this.state.fieldList.length ? <FieldTable {...this.props} fieldList={this.state.fieldList} /> : ''
+              this.state.fieldList.length ? <FieldTable  {...this.props} fieldList={this.state.fieldList}
+                changeFields={this.changeFields} getRowRef={this.getRowRef} /> : ''
             }
           </Form.Item>
           <Form.Item label='数据名称'>
@@ -183,10 +185,35 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
     }
   }
 
+  public changeFields = (data: any[]) => {
+    this.setState({
+      fieldList: data
+    });
+  }
+
+  public getRowRef = (el: any) => {
+    this.fieldEl = el;
+  }
+
   private validateField: () => void = () => {
     const { validateFields } = this.props.form;
-    // console.log(this.fieldEl);
-    this.fieldEl.validateTable();
+    console.log(this.fieldEl);
+    portForm.forEach(form => {
+      form.validateFields((error, value) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log(value);
+        }
+      })
+    })
+    /* this.fieldEl.props.form.validateFields((error, value) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(value);
+      }
+    }); */
     validateFields((error, value) => {
       if (error) {
         Message.error('按规则完善所有字段');
@@ -196,8 +223,6 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
           Message.warning('没有上传文件');
           return;
         }
-        console.log(value);
-        console.log(this.state.fieldList);
       }
     })
   }
@@ -211,7 +236,11 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
         file.url = file.response.data.address;
         console.log(file);
         this.setState({
-          fieldList: file.response.data.directoryEntityList
+          fieldList: file.response.data.directoryEntityList.map(field => {
+            field.key = Math.random();
+            // field.nameEng = "12323";
+            return field;
+          })
         });
       }
       return file;
@@ -254,6 +283,7 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
     }
 
   }
+
 }
 
 export default Form.create({ name: 'fileForm' })(FileForm);

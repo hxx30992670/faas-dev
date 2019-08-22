@@ -21,6 +21,7 @@
     "no-var-requires": false,
     "interface-name": false,
     "no-string-literal": false,
-    "jsx-no-string-ref": false
+    "jsx-no-string-ref": false,
+    "max-classes-per-file": false
   }
 }
