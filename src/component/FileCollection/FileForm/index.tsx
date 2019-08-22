@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Form, Cascader, message as Message, Button, Upload, Icon, Input } from 'antd';
+import { Form, Cascader, message as Message, Button, Upload, Icon, Input, Modal } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import { UploadChangeParam } from "antd/lib/upload";
 import style from './style.module.less';
@@ -7,6 +7,7 @@ import request from "src/utils/Request";
 import localSave from "src/utils/LocalSave";
 import FieldTable from '../FieldTable/index';
 import { portForm } from "../FieldTable/table";
+import PrviewData from "../DataPrview/index";
 
 export interface IFileFormProps extends FormComponentProps {
 
@@ -17,7 +18,8 @@ interface IFileFormState {
   fileList: any[],
   fieldList: any[],
   dataPrview: any[],
-
+  headerList: any[],
+  visible: boolean,
 }
 
 class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
@@ -28,7 +30,9 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
       categoryList: [],
       fileList: [],
       fieldList: [],
-      dataPrview: []
+      dataPrview: [],
+      headerList: [],
+      visible: false
     }
 
   }
@@ -98,7 +102,7 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
                 </div>
               </Upload>
               {
-                this.state.fieldList.length ? <Button type='link'>数据预览</Button> : ''
+                this.state.fieldList.length ? <Button type='link' onClick={this.openModal}>数据预览</Button> : ''
               }
             </div>
             {
@@ -164,8 +168,29 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
             </Button>
           </Form.Item>
         </Form>
+        <Modal
+          title='数据预览'
+          visible={this.state.visible}
+          okText='关闭'
+          footer={null}
+          maskClosable={false}
+          onCancel={this.closeModal}
+          width='60%'
+        >
+          <PrviewData dataList={this.state.dataPrview} tableHeader={this.state.headerList} />
+        </Modal>
       </div>
     );
+  }
+  public openModal = () => {
+    this.setState({
+      visible: true
+    })
+  }
+  public closeModal = () => {
+    this.setState({
+      visible: false
+    })
   }
   public getCatalogList = async () => {
     try {
@@ -197,23 +222,6 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
 
   private validateField: () => void = () => {
     const { validateFields } = this.props.form;
-    console.log(this.fieldEl);
-    portForm.forEach(form => {
-      form.validateFields((error, value) => {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log(value);
-        }
-      })
-    })
-    /* this.fieldEl.props.form.validateFields((error, value) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log(value);
-      }
-    }); */
     validateFields((error, value) => {
       if (error) {
         Message.error('按规则完善所有字段');
@@ -222,6 +230,18 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
         if (!fileList.length) {
           Message.warning('没有上传文件');
           return;
+        } else {
+          let bOn: boolean = true; 
+          portForm.forEach(form => {
+            form.validateFields((fieldError, fielDValue) => {
+              if(fieldError){
+                bOn = false;
+              }
+            })
+          });
+          if(!bOn) {
+            Message.warning('请填写字段信息');
+          }
         }
       }
     })
@@ -234,13 +254,28 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
     fileList = fileList.map(file => {
       if (file.response && file.response.status === 200) {
         file.url = file.response.data.address;
-        console.log(file);
+        const headerList = file.response.data.previewData[0];
+
+        let prviewList = file.response.data.previewData.slice(1);
+        prviewList = prviewList.map((data) => {
+          const result = {
+            key: Math.random(),
+          };
+          data.forEach((child,index) => {
+            result[headerList[index]] = child
+          });
+          return result;
+        })
         this.setState({
           fieldList: file.response.data.directoryEntityList.map(field => {
             field.key = Math.random();
             // field.nameEng = "12323";
             return field;
-          })
+          }),
+          headerList,
+          dataPrview: prviewList
+        },() => {
+          console.log(this.state.dataPrview, 'prview');
         });
       }
       return file;
