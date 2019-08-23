@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import { Form, Cascader, message as Message, Button, Upload, Icon, Input, Modal } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import { UploadChangeParam } from "antd/lib/upload";
@@ -8,6 +9,11 @@ import localSave from "src/utils/LocalSave";
 import FieldTable from '../FieldTable/index';
 import { portForm } from "../FieldTable/table";
 import PrviewData from "../DataPrview/index";
+const { confirm } = Modal;
+
+export interface IFileFormProps extends RouteComponentProps {
+
+}
 
 export interface IFileFormProps extends FormComponentProps {
 
@@ -20,6 +26,8 @@ interface IFileFormState {
   dataPrview: any[],
   headerList: any[],
   visible: boolean,
+  sufixName: string,
+  fileName: string,
 }
 
 class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
@@ -32,9 +40,10 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
       fieldList: [],
       dataPrview: [],
       headerList: [],
-      visible: false
+      visible: false,
+      sufixName: '',
+      fileName: ''
     }
-
   }
   public componentDidMount() {
     this.getCatalogList();
@@ -84,6 +93,7 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
                   options={this.state.categoryList}
                   displayRender={displayRender}
                   placeholder='请选择所属目录'
+                  style={{ width: 200 }}
                 />
               )
             }
@@ -93,6 +103,7 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
               <Upload {...props} fileList={this.state.fileList}
                 beforeUpload={this.beforUpload}
                 className={style.customUpload}
+                onRemove={this.removeUpload}
               >
                 <div className={style.uploadWrap}>
                   <Button type='primary'>
@@ -102,7 +113,7 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
                 </div>
               </Upload>
               {
-                this.state.fieldList.length ? <Button type='link' onClick={this.openModal}>数据预览</Button> : ''
+                this.state.dataPrview.length ? <Button type='link' onClick={this.openModal}>数据预览</Button> : ''
               }
             </div>
             {
@@ -163,7 +174,7 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
             }
           </Form.Item>
           <Form.Item label=' ' colon={false}>
-            <Button onClick={this.validateField}>
+            <Button type='primary' onClick={this.validateField}>
               提交
             </Button>
           </Form.Item>
@@ -202,6 +213,8 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
         this.setState({
           categoryList: data
         })
+      } else if (status === 204) {
+        Message.warning('目录数据为空');
       } else {
         Message.error(message);
       }
@@ -220,9 +233,28 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
     this.fieldEl = el;
   }
 
+  private getType(str: string) {
+    switch (str) {
+      case "Bigint":
+        return 1;
+      case "Varchar":
+        return 2;
+      case "Double":
+        return 3;
+      case 'Datetime':
+        return 4;
+      case 'time':
+        return 41;
+      case 'date':
+        return 43;
+      default:
+        return 2;
+    }
+  }
+
   private validateField: () => void = () => {
     const { validateFields } = this.props.form;
-    validateFields((error, value) => {
+    validateFields(async (error, value) => {
       if (error) {
         Message.error('按规则完善所有字段');
       } else {
@@ -231,24 +263,84 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
           Message.warning('没有上传文件');
           return;
         } else {
-          let bOn: boolean = true; 
+          let bOn: boolean = true;
           portForm.forEach(form => {
-            form.validateFields((fieldError, fielDValue) => {
-              if(fieldError){
+            form.validateFields((fieldError, fieldValue) => {
+              if (fieldError) {
                 bOn = false;
               }
             })
           });
-          if(!bOn) {
+          if (!bOn) {
             Message.warning('请填写字段信息');
+          } else {
+            const metaList = this.state.fieldList.map(item => {
+              item.rootId = value.category[0];
+              item.subId = value.category[1];
+              item.type = this.getType(item.type);
+              return item;
+            })
+            const params = {
+              address: this.state.fileList[0].url,
+              dataName: value.dataName,
+              dataSource: value.dataSource,
+              description: value.dataDescription,
+              format: this.state.sufixName,
+              name: value.dataName,
+              purpose: value.dataUse,
+              rootId: value.category[0],
+              subId: value.category[1],
+              metaInsertParam: metaList
+            }
+            try {
+              const { status, message } = await request.post('/collection/info/DataFile/insert', params, { loading: true, loadingTitle: '文件采集中……' });
+              if (status === 200) {
+                Message.success('文件采集成功');
+                this.props.history.push('/data-manager/data-list');
+              } else {
+                Message.warning(message);
+              }
+            } catch (e) {
+              Message.error('服务器错误');
+            }
+            console.log(value);
+            console.log(this.state.fieldList);
           }
         }
       }
     })
   }
 
+  private removeUpload = async () => {
+    try {
+      const result: any = await new Promise((resolve, reject) => {
+        confirm({
+          title: '删除',
+          content: '是否要删除该文件？',
+          okText: '确定',
+          cancelText: '取消',
+          onOk: () => {
+            this.setState({
+              fileList: [],
+              fieldList: [],
+              dataPrview: [],
+              headerList: []
+            })
+            return resolve();
+          },
+          onCancel: () => {
+            return reject();
+          }
+        })
+      });
+      console.log(result);
+      return result;
+    } catch (e) {
+      return false;
+    }
+  }
+
   private handleChange = (info: UploadChangeParam) => {
-    console.log(info);
     let fileList: any[] = [...info.fileList];
     fileList = fileList.slice(-1);
     fileList = fileList.map(file => {
@@ -261,7 +353,7 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
           const result = {
             key: Math.random(),
           };
-          data.forEach((child,index) => {
+          data.forEach((child, index) => {
             result[headerList[index]] = child
           });
           return result;
@@ -274,8 +366,6 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
           }),
           headerList,
           dataPrview: prviewList
-        },() => {
-          console.log(this.state.dataPrview, 'prview');
         });
       }
       return file;
@@ -287,8 +377,14 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
       Message.error(info.file.response.message);
     } else {
       if (info.file.status) {
+        const { setFieldsValue } = this.props.form;
+        setFieldsValue({
+          dataName: info.file.name
+        })
+        const sufixName = info.file.name.split('.');
         this.setState({
-          fileList
+          fileList,
+          sufixName: sufixName[sufixName.length - 1],
         });
       }
     }

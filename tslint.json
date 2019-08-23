@@ -22,6 +22,8 @@
     "interface-name": false,
     "no-string-literal": false,
     "jsx-no-string-ref": false,
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "prefer-const": false,
+    "comment-format": false
   }
 }

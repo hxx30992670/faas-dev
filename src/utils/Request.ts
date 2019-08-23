@@ -18,7 +18,6 @@ const request = async (url: string, options: any) => {
       type: CHANGELOADING,
       payload: true
     });
-    console.log(options.loadingTitle);
     Store.dispatch({
       type: CHANGELOADINGTITLE,
       payload: options.loadingTitle

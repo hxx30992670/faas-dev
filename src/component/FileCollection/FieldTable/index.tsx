@@ -10,6 +10,14 @@ interface IFieldTableProps extends FormComponentProps {
   getRowRef: (el: any) => void
 }
 
+interface IRules {
+  required?: boolean,
+  message: string,
+  validator?: any,
+  max?: number,
+  pattern?: RegExp
+}
+
 class FieldTable extends React.Component<IFieldTableProps, any> {
   public rowEL: any
   constructor(props: IFieldTableProps) {
@@ -20,7 +28,6 @@ class FieldTable extends React.Component<IFieldTableProps, any> {
   }
 
   public render() {
-    console.log(this.props.fieldList);
     const components = {
       body: {
         row: EditableFormRow,
@@ -29,13 +36,23 @@ class FieldTable extends React.Component<IFieldTableProps, any> {
     }
     let columns = [
       {
-        title: '中文名称',
+        title: (
+          <div className={style.headerBox}>
+            <span className={style.mark}>*</span>
+            <span className={style.text}>中文名称</span>
+          </div>
+        ),
         dataIndex: 'name',
         key: 'name',
         editable: true,
       },
       {
-        title: '英文名称',
+        title: (
+          <div className={style.headerBox}>
+            <span className={style.mark}>*</span>
+            <span className={style.text}>英文名称</span>
+          </div>
+        ),
         dataIndex: 'nameEng',
         key: 'nameEng',
         editable: true,
@@ -47,7 +64,12 @@ class FieldTable extends React.Component<IFieldTableProps, any> {
         editable: true
       },
       {
-        title: '说明',
+        title: (
+          <div className={style.headerBox}>
+            <span className={style.mark}>*</span>
+            <span className={style.text}>说明</span>
+          </div>
+        ),
         dataIndex: 'description',
         key: 'description',
         editable: true
@@ -65,6 +87,7 @@ class FieldTable extends React.Component<IFieldTableProps, any> {
           dataIndex: col.dataIndex,
           inputtype: col.dataIndex === 'type' ? 'select' : 'input',
           title: col.title,
+          rules: this.getRule(col.dataIndex),
           handleSave: this.handleSave,
         }),
       }
@@ -77,6 +100,35 @@ class FieldTable extends React.Component<IFieldTableProps, any> {
         />
       </div>
     );
+  }
+  public getRule = (value: string): any[] => {
+    let result: IRules[] = [];
+    if (value === 'name') {
+      result = [
+        { required: true, message: '中文名称不能为空' },
+        { max: 64, message: '中文名称最长不能超出64' },
+        { pattern: /^[\u4e00-\u9fa5 a-zA-Z0-9_]+$/, message: '中文名称必须是字母、中文、数字、下划线' },
+        { pattern: /[\u4e00-\u9fa5 a-zA-Z]+/, message: '中文名称必须包含中文或者字母' },
+        { pattern: /^[^\s]+$/g, message: '中文名称不能包含空格' }
+      ]
+    } else if (value === 'nameEng') {
+      result = [
+        { required: true, message: '英文名称不能为空' },
+        { max: 64, message: '英文名称最长不能超出64' },
+        { pattern: /^[a-zA-Z0-9_]+$/, message: '英文名称必须是字母、数字、下划线' },
+        { pattern: /[a-zA-Z]+/, message: '英文名称必须包含字母' },
+        { pattern: /^[^\s]+$/g, message: '英文名称不能包含空格' }
+      ]
+    } else if (value === 'type') {
+      result = [
+        { required: true, message: '类型不能为空' }
+      ]
+    } else if (value === 'description') {
+      result = [
+        { required: true, message: '说明不能为空' }
+      ]
+    }
+    return result;
   }
   public validateTable = () => {
     this.props.form.validateFields((error, values) => {

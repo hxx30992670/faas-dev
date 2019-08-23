@@ -29,6 +29,9 @@ body,
 .App .ant-tabs-tabpane .tabs-wrap {
   padding: 15px;
 }
+.App .ant-tabs-tabpane .main-container {
+  padding: 10px;
+}
 .App .editable-cell-value-wrap {
   padding: 5px;
   min-width: 150px;

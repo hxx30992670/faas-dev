@@ -1,7 +1,7 @@
 import * as React from 'react';
 import style from "./style.module.less";
-import {Table} from 'antd';
-
+import { Table } from 'antd';
+//import React from "react";
 export interface IDataPrviewProps {
   dataList: any[],
   tableHeader: any[],

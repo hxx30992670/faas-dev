@@ -26,23 +26,31 @@ class EditableCell extends React.Component<any, any>{
   }
 
   public toggleEdit = () => {
-    const editing = !this.state.editing;
+    /* const editing = !this.state.editing;
     this.setState({ editing }, () => {
       if (editing) {
         this.input.focus();
       }
-    })
+    }) */
+
+    this.input.focus();
   }
 
   public save = (e) => {
-    const { record, handleSave } = this.props;
-    this.form.validateFields((error, value) => {
+    const { record, handleSave, dataIndex } = this.props;
+    const { getFieldValue } = this.form;
+    /* this.form.validateFields((error, value) => {
       if (error && error[e.currentTarget.id]) {
         return;
       }
       this.toggleEdit();
       handleSave({ ...record, ...value });
-    })
+    }) */
+    console.log({
+      [dataIndex]: getFieldValue(dataIndex)
+    });
+
+    handleSave({ ...record, [dataIndex]: getFieldValue(dataIndex) });
   }
 
   public getInput = () => {
@@ -66,17 +74,13 @@ class EditableCell extends React.Component<any, any>{
 
   public renderCell = (form) => {
     this.form = form;
-    const { dataIndex, record, title, inputtype } = this.props;
-    // const { editing } = this.state;
-
+    const { dataIndex, record, rules } = this.props;
     return (
       <Form.Item style={{ margin: 0 }}>
         {
           form.getFieldDecorator(dataIndex, {
-            validateTrigger: inputtype === 'input' ? ["onBlur"] : ["onChange"],
-            rules: [
-              { required: true, message: `${title}不能为空` }
-            ],
+            validateTrigger: ["onChange"],
+            rules,
             initialValue: record[dataIndex]
           })(
             this.getInput()
@@ -110,7 +114,7 @@ class EditableCell extends React.Component<any, any>{
       ...restProps
     } = this.props;
     return (
-      <td {...restProps} style={{ padding: 5 }} >
+      <td {...restProps} style={{ padding: 5 }} onClick={this.toggleEdit}>
         {
           editable ? (
             <EditableContext.Consumer>{this.renderCell}</EditableContext.Consumer>

@@ -3,3 +3,14 @@
   max-height: 350px;
   overflow-y: auto;
 }
+.container .header-box {
+  display: flex;
+  align-items: center;
+}
+.container .header-box .mark {
+  color: red;
+  margin-right: 10px;
+}
+.container .header-box .text {
+  color: #000;
+}

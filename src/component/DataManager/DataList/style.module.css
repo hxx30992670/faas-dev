@@ -1,0 +1,26 @@
+.container {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.container .left {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 70%;
+}
+.container .left .select {
+  width: 200px;
+}
+.container .left .input {
+  width: 260px;
+}
+.container .left .date-picker {
+  width: 300px;
+}
+.container .left .searchResult {
+  color: #999;
+}
+.table-wrap {
+  padding-top: 10px;
+}
