@@ -1,6 +1,6 @@
 import { MofilyAction } from "../actions/index";
 import { IStoreType } from "../types";
-import { CHANGECURRENTROUTE, CHANGELOADING, CHANGELOADINGTITLE } from "../constants";
+import { CHANGECURRENTROUTE, CHANGELOADING, CHANGELOADINGTITLE, CHANGESELECTLIST } from "../constants";
 
 
 export default (state: IStoreType, action: MofilyAction): IStoreType => {
@@ -17,6 +17,10 @@ export default (state: IStoreType, action: MofilyAction): IStoreType => {
     case CHANGELOADINGTITLE:
       state = Object.assign({}, state);
       state.loadingTitle = action.payload;
+      return state;
+    case CHANGESELECTLIST:
+      state = Object.assign({}, state);
+      state.selectList = action.payload;
       return state;
     default:
       return state;

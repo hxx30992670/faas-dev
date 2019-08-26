@@ -24,6 +24,8 @@ const request = async (url: string, options: any) => {
     })
   }
 
+  // setTimeout(() => function())
+
   return axios.request({
     url,
     method: options.method,
@@ -35,12 +37,10 @@ const request = async (url: string, options: any) => {
     if (Number(data.status) === 401) {
       window.location.href = '/login';
     }
-    if (options.loading) {
-      Store.dispatch({
-        type: CHANGELOADING,
-        payload: false
-      });
-    }
+    Store.dispatch({
+      type: CHANGELOADING,
+      payload: false
+    });
     return data;
   }).catch((error: any) => {
     if (options.loading) {

@@ -39,17 +39,6 @@ class EditableCell extends React.Component<any, any>{
   public save = (e) => {
     const { record, handleSave, dataIndex } = this.props;
     const { getFieldValue } = this.form;
-    /* this.form.validateFields((error, value) => {
-      if (error && error[e.currentTarget.id]) {
-        return;
-      }
-      this.toggleEdit();
-      handleSave({ ...record, ...value });
-    }) */
-    console.log({
-      [dataIndex]: getFieldValue(dataIndex)
-    });
-
     handleSave({ ...record, [dataIndex]: getFieldValue(dataIndex) });
   }
 

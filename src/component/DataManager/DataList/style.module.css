@@ -24,3 +24,6 @@
 .table-wrap {
   padding-top: 10px;
 }
+.table-wrap .opeartion-box {
+  display: flex;
+}

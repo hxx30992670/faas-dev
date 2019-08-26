@@ -16,8 +16,8 @@ export interface IDataListState {
 }
 
 export interface ISearch {
-  dataType: string;
-  dataName: string;
+  dataType: string | undefined;
+  dataName: any;
   dateRang: any[]
 }
 export interface IPage {
@@ -32,8 +32,8 @@ export default class DataList extends React.Component<IDataListProps, IDataListS
     this.state = {
       activeTab: '1',
       searchValue: {
-        dataType: '',
-        dataName: '',
+        dataType: undefined,
+        dataName: undefined,
         dateRang: []
       },
       dataList: [],
@@ -58,15 +58,33 @@ export default class DataList extends React.Component<IDataListProps, IDataListS
             tab='文件采集'
           >
             <div className='tabs-wrap'>
-              <Search searchValue={this.state.searchValue} />
-              <TableList dataList={this.state.dataList} pageObject={this.state.pageObject} />
+              <Search searchValue={this.state.searchValue} getDataList={this.getDataList} total={this.state.pageObject.total}
+                changeSearchValue={this.changeSearchValue}
+                resetSearch={this.resetScreen}
+              />
+              <TableList dataList={this.state.dataList} pageObject={this.state.pageObject} changePage={this.changePageData}
+                getDataList={this.getDataList}
+              />
             </div>
           </Tabs.TabPane>
         </Tabs>
       </div>
     );
   }
-  private async getDataList() {
+
+  public changeSearchValue = (key: string, value: any) => {
+    const { searchValue } = this.state;
+    searchValue[key] = value;
+    this.setState({
+      searchValue
+    }, () => {
+      if (key === 'dataType' || key === 'dateRang') {
+        this.getDataList();
+      }
+    })
+  }
+
+  private getDataList = async () => {
     try {
       const params = {
         dataType: this.state.searchValue.dataType === '' ? null : this.state.searchValue.dataType,
@@ -100,5 +118,25 @@ export default class DataList extends React.Component<IDataListProps, IDataListS
     } catch (e) {
 
     }
+  }
+  private changePageData = (num) => {
+    const { pageObject } = this.state;
+    pageObject.currentPage = num;
+    this.setState({
+      pageObject
+    }, () => {
+      this.getDataList();
+    });
+  }
+  private resetScreen = () => {
+    this.setState({
+      searchValue: {
+        dataType: undefined,
+        dataName: undefined,
+        dateRang: []
+      }
+    }, () => {
+      this.getDataList();
+    })
   }
 }
