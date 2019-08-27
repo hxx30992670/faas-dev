@@ -103,15 +103,19 @@ export default class DataList extends React.Component<IDataListProps, IDataListS
         loading: true,
         loadingTitle: '数据列表加载中……'
       });
+	    let { pageObject } = this.state;
+	    pageObject.total = total || 0;
       if (status === 200) {
-        let { pageObject } = this.state;
-        pageObject.total = total;
         this.setState({
           dataList: data,
           pageObject
         })
       } else if (status === 204) {
         Message.warning('数据列表为空');
+        this.setState({
+					dataList: [],
+	        pageObject
+        })
       } else {
         Message.warning(message);
       }
@@ -129,12 +133,15 @@ export default class DataList extends React.Component<IDataListProps, IDataListS
     });
   }
   private resetScreen = () => {
+  	const {pageObject} = this.state;
+  	pageObject.currentPage = 1;
     this.setState({
       searchValue: {
         dataType: undefined,
         dataName: undefined,
         dateRang: []
-      }
+      },
+	    pageObject
     }, () => {
       this.getDataList();
     })

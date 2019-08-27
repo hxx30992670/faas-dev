@@ -20,7 +20,7 @@ export default class App extends React.Component<IFileCollectionProps, IFileColl
   public render() {
     return (
       <div className={style.container}>
-        <Tabs
+          <Tabs
           type='card'
           activeKey={this.state.activeTab}
         >

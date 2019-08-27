@@ -24,6 +24,7 @@ const mapStateToProps = (state: StoreState) => ({
   loading: state.loading,
   loadingTitle: state.loadingTitle
 });
+Spin.setDefaultIndicator(Layout)
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onChangeMenuSelect: (payload: string) => dispatch(changeRoute(payload))
@@ -67,7 +68,7 @@ class MainTemplate extends React.Component<IMainTemplateProps, IMainTemplateStat
   public render() {
     const { match } = this.props;
     return (
-      <Spin spinning={this.props.loading} tip={this.props.loadingTitle} wrapperClassName='loading-wrap'>
+      <Spin spinning={this.props.loading} tip={this.props.loadingTitle} wrapperClassName='loading-wrap' className={'test-wrap'}>
         <Layout className={Style.container}>
           <Header className={Style.customHeader}>
             <div className={Style.headerWrap}>

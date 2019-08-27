@@ -88,13 +88,20 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
                   { required: true, message: '所属目录不能为空' }
                 ]
               })(
-                <Cascader
-                  fieldNames={filedNames}
-                  options={this.state.categoryList}
-                  displayRender={displayRender}
-                  placeholder='请选择所属目录'
-                  style={{ width: 200 }}
-                />
+                <div className={'form-inline'}>
+	                <Cascader
+		                fieldNames={filedNames}
+		                options={this.state.categoryList}
+		                displayRender={displayRender}
+		                placeholder='请选择所属目录'
+		                style={{ width: 200 }}
+	                />
+	                <p className={'tips'}>
+		                *无关联目录，请先
+		                <span>创建目录！</span>
+		                <Icon type="info-circle" style={{color: 'rgb(47,145,216)', marginLeft: 15}} />
+	                </p>
+                </div>
               )
             }
           </Form.Item>
@@ -349,8 +356,8 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
         const headerList = file.response.data.previewData[0];
 
         let prviewList = file.response.data.previewData.slice(1);
-        prviewList = prviewList.map((data) => {
-          const result = {
+        prviewList = prviewList.map((data: any) => {
+          const result: any = {
             key: Math.random(),
           };
           data.forEach((child, index) => {

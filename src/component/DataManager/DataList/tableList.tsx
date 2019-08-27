@@ -102,9 +102,10 @@ class TableList extends React.Component<ITableListProps, ITableListState> {
       showTotal: (total) => {
         return `共计：${total}数据`;
       },
-      defaultCurrent: this.props.pageObject.currentPage,
+	    current: this.props.pageObject.currentPage,
       defaultPageSize: this.props.pageObject.pageSize,
       total: this.props.pageObject.total,
+	    hideOnSinglePage: false,
       onChange: (page: number) => {
         this.props.changePage(page);
       }

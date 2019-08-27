@@ -37,10 +37,10 @@ const request = async (url: string, options: any) => {
     if (Number(data.status) === 401) {
       window.location.href = '/login';
     }
-    Store.dispatch({
-      type: CHANGELOADING,
-      payload: false
-    });
+	  Store.dispatch({
+		  type: CHANGELOADING,
+		  payload: false
+	  });
     return data;
   }).catch((error: any) => {
     if (options.loading) {
