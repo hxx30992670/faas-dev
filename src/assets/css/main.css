@@ -16,13 +16,27 @@ body,
   height: 100%;
 }
 .loading-wrap {
-  background: rgba(0, 0, 0, 0.4) !important;
+  background: rgba(0, 0, 0, 0.7) !important;
   width: 100%;
   height: 100%;
   overflow: hidden;
+  /*&>div:nth-child(1){
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+  }*/
+}
+.loading-wrap .test-wrap {
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
 }
 .loading-wrap .ant-spin-container {
   height: 100%;
+  color: #fff;
 }
 .App {
   box-sizing: border-box;
@@ -37,6 +51,23 @@ body,
 }
 .App .ant-tabs-tabpane .tabs-wrap {
   padding: 15px;
+}
+.App .ant-tabs-tabpane .tabs-wrap .form-inline {
+  display: flex;
+  align-items: center;
+}
+.App .ant-tabs-tabpane .tabs-wrap .form-inline .tips {
+  margin-left: 20px;
+}
+.App .ant-tabs-tabpane .tabs-wrap .form-inline .tips span {
+  cursor: pointer;
+  color: #f4ab37;
+}
+.App .ant-tabs-tabpane .tabs-wrap .editable-row td {
+  padding: 5px !important;
+}
+.App .ant-tabs-tabpane .tabs-wrap .editable-row td .ant-form-item {
+  margin: 0 !important;
 }
 .App .ant-tabs-tabpane .main-container {
   padding: 10px;

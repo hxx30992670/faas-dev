@@ -1,16 +1,16 @@
 import * as React from 'react';
-import {Button, Table, Icon, message as Message} from 'antd';
+import { Button, Table, Icon, message as Message } from 'antd';
 import { FormComponentProps } from "antd/lib/form";
 import { EditableCell, EditableFormRow } from './table';
 import style from "./style.module.less";
 
-interface IRequestParamsProps extends  FormComponentProps {
+interface IRequestParamsProps extends FormComponentProps {
 
 }
 
-interface IRequestParamsProps{
+interface IRequestParamsProps {
   fieldList: any[],
-  changeFields : (data: any[]) => void,
+  changeFields: (data: any[]) => void,
 }
 
 
@@ -54,61 +54,62 @@ class RequestParams extends React.Component<IRequestParamsProps, any> {
             <span className={style.text}>说明</span>
           </div>
         ),
-        dataIndex: 'description',
-        key: 'description',
+        dataIndex: 'desc',
+        key: 'desc',
         editable: true
       },
-	    {
-	    	title: '操作',
-		    key: 'operation',
-		    width: 120,
-		    render: (text, row) => (
-		    	<div>
-				    <Button type='link' title={'新增'} onClick={this.addRow}>
-					    <Icon type="plus" />
-				    </Button>
-				    <Button type='link' title={'删除'} style={{color: 'red'}} onClick={this.removeRow.bind(this, row)}>
-					    <Icon type={'delete'} />
-				    </Button>
-			    </div>
-		    )
-	    }
+      {
+        title: '操作',
+        key: 'operation',
+        width: 120,
+        render: (text, row) => (
+          <div>
+            <Button type='link' title={'新增'} onClick={this.addRow}>
+              <Icon type="plus" />
+            </Button>
+            <Button type='link' title={'删除'} style={{ color: 'red' }} onClick={this.removeRow.bind(this, row)}>
+              <Icon type={'delete'} />
+            </Button>
+          </div>
+        )
+      }
     ];
     const getSelectOptions = (dataIndex: string) => {
-    	let result: any[] = [];
-    	if(dataIndex === 'must') {
-    		result = [
-			    {key: Math.random(), text: '是', value: 1},
-			    {key: Math.random(), text: '否', value: 2}
-		    ]
-	    }else if(dataIndex === 'type') {
-    		result = [
-			    {key: Math.random(), text: 'Bigint', value: 1},
-			    {key: Math.random(), text: 'Varchar', value: 2},
-			    {key: Math.random(), text: 'Double', value: 3},
-			    {key: Math.random(), text: 'Datetime', value: 4},
-			    {key: Math.random(), text: 'time', value: 41},
-			    {key: Math.random(), text: 'date', value: 43},
-		    ]
-	    } else {
-    		result = [];
-	    }
-    	return result;
+      let result: any[] = [];
+      if (dataIndex === 'must') {
+        result = [
+          { key: Math.random(), text: '是', value: 1 },
+          { key: Math.random(), text: '否', value: 2 }
+        ]
+      } else if (dataIndex === 'type') {
+        result = [
+          { key: Math.random(), text: 'Bigint', value: 1 },
+          { key: Math.random(), text: 'Varchar', value: 2 },
+          { key: Math.random(), text: 'Double', value: 3 },
+          { key: Math.random(), text: 'Datetime', value: 4 },
+          { key: Math.random(), text: 'time', value: 41 },
+          { key: Math.random(), text: 'date', value: 43 },
+        ]
+      } else {
+        result = [];
+      }
+      return result;
     }
     columns = columns.map((col: any) => {
-	    return {
-		    ...col,
-		    onCell: record => ({
-			    record,
-			    editable: col.editable,
-			    dataIndex: col.dataIndex,
-			    inputtype: col.dataIndex === 'type' ? 'select' : col.dataIndex === 'must' ? 'select' : 'input',
-			    selectoption: getSelectOptions(col.dataIndex),
-			    title: col.title,
-			    rules: this.getRule(col.dataIndex),
-			    handleSave: this.handleSave,
-		    }),
-	    }
+      return {
+        ...col,
+        onCell: record => ({
+          record,
+          editable: col.editable,
+          dataIndex: col.dataIndex,
+          inputtype: col.dataIndex === 'type' ? 'select' : col.dataIndex === 'must' ? 'select' : 'input',
+          selectoption: getSelectOptions(col.dataIndex),
+          title: col.title,
+          rules: this.getRule(col.dataIndex),
+          handleSave: this.handleSave,
+          form: this.props.form
+        }),
+      }
 
     })
     const rowClassName = (record, index) => 'editable-row'
@@ -138,11 +139,11 @@ class RequestParams extends React.Component<IRequestParamsProps, any> {
       result = [
         { required: true, message: '类型不能为空' }
       ]
-    } else if (value === 'description') {
+    } else if (value === 'desc') {
       result = [
         { required: true, message: '说明不能为空' },
-	      { max: 100, message: '说明长度不能超出100' },
-	      { pattern: /^[^\s]+$/g, message: '说明不能包含空格' }
+        { max: 100, message: '说明长度不能超出100' },
+        { pattern: /^[^\s]+$/g, message: '说明不能包含空格' }
       ]
     }
     return result;
@@ -169,23 +170,23 @@ class RequestParams extends React.Component<IRequestParamsProps, any> {
   };
 
   private addRow = () => {
-  	let fieldList: any[] = this.props.fieldList;
-  	let newData = {
-		  id: Math.random(),
-		  name: '',
-		  description: ''
-	  }
-  	fieldList.push(newData);
-  	this.props.changeFields(fieldList);
+    let fieldList: any[] = this.props.fieldList;
+    let newData = {
+      id: Math.random(),
+      name: '',
+      desc: ''
+    }
+    fieldList.push(newData);
+    this.props.changeFields(fieldList);
   }
   private removeRow = (row: any) => {
-  	let {fieldList} = this.props;
-  	if(fieldList.length > 1) {
-  		fieldList = fieldList.filter(item => item.id !== row.id);
-  		this.props.changeFields(fieldList);
-	  }else {
-  		Message.warning('错误码说明至少保留一行');
-	  }
+    let { fieldList } = this.props;
+    if (fieldList.length > 1) {
+      fieldList = fieldList.filter(item => item.id !== row.id);
+      this.props.changeFields(fieldList);
+    } else {
+      Message.warning('错误码说明至少保留一行');
+    }
   }
 }
 

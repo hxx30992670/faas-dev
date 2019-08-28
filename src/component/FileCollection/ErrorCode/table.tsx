@@ -5,7 +5,7 @@ const errorForm: any[] = [];
 const EditableContext = React.createContext({ form: {} });
 
 const editableRow: any = ({ form, index, ...props }) => {
-	errorForm.push(form);
+  errorForm.push(form);
   return (
     <EditableContext.Provider value={form}>
       <tr {...props} />
@@ -27,7 +27,7 @@ class EditableCell extends React.Component<any, any>{
   public save = (e) => {
     const { record, handleSave, dataIndex } = this.props;
     const { getFieldValue } = this.form;
-    handleSave({ ...record, [dataIndex]: getFieldValue(dataIndex) });
+    handleSave({ ...record, [dataIndex]: getFieldValue(dataIndex + record.id) });
   }
 
   public getInput = () => {
@@ -36,33 +36,33 @@ class EditableCell extends React.Component<any, any>{
         <Input ref={node => this.input = node} onPressEnter={this.save} onBlur={this.save} placeholder='请输入' />
       )
     } else {
-    	const {selectoption} = this.props;
+      const { selectoption } = this.props;
       return (
         <Select>
-	        {
-		        selectoption.map((item: any) => {
-	        		return (
-				        <Select.Option value={item.value} key={item.key}>{item.text}</Select.Option>
-			        )
-		        })
-	        }
+          {
+            selectoption.map((item: any) => {
+              return (
+                <Select.Option value={item.value} key={item.key}>{item.text}</Select.Option>
+              )
+            })
+          }
         </Select>
       )
     }
   }
 
-  public renderCell = (form) => {
-    this.form = form;
-    const { dataIndex, record, rules, inputtype } = this.props;
+  public renderCell = () => {
+    this.form = this.props.form;
+    const { dataIndex, record, rules, inputtype, form } = this.props;
     return (
       <Form.Item style={{ margin: 0 }}>
         {
-          form.getFieldDecorator(dataIndex, {
+          form.getFieldDecorator(dataIndex + record.id, {
             validateTrigger: inputtype === 'select' ? ["onChange"] : ["onBlur"],
             rules,
             initialValue: record[dataIndex]
           })(
-	          this.getInput()
+            this.getInput()
           )
         }
       </Form.Item>
@@ -98,6 +98,6 @@ class EditableCell extends React.Component<any, any>{
 export {
   EditableFormRow,
   EditableCell,
-	errorForm
+  errorForm
 }
 
