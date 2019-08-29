@@ -50,6 +50,7 @@ class Search extends Component<ISearchProps, ISearchState> {
               style={{width: 350}}
               onSearch={this.props.getTableSyncDataList}
 						/>
+					
 					</div>
 				</div>
 				<div className={style.right}>

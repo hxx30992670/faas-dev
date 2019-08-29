@@ -128,7 +128,7 @@ class MainMenu extends React.Component<IMainMenuProps, IMainMenuState> {
           selectedKeys={[currentRoute]}
           openKeys={openKeys}
           mode='inline'
-          style={{ width: 250 }}
+          style={{ width: 200 }}
           className='main-menu'
           onOpenChange={this.changeSubMenu}
           onSelect={this.changeMenuItem}

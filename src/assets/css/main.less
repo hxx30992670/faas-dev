@@ -9,6 +9,9 @@ ol,
 p {
   margin: 0;
 }
+body *{
+  font-size: 12px;
+}
 
 html,
 body,
@@ -62,7 +65,16 @@ body,
 
     .tabs-wrap {
       padding: 15px;
-
+      .ant-form-item{
+        label {
+          font-size: 12px !important;
+        }
+      }
+      .bigSize {
+        svg {
+          font-size: 20px;
+        }
+      }
       .form-inline {
         display: flex;
         align-items: center;
@@ -87,7 +99,12 @@ body,
         }
       }
     }
-
+    .ant-table {
+      font-size: 12px;
+      th {
+        font-weight: bold;
+      }
+    }
     .main-container {
       padding: 10px;
 

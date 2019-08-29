@@ -81,8 +81,8 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 		}
 
 		return (
-			<Form {...formItemLayout}>
-				<Form.Item label={'所属目录'}>
+			<Form {...formItemLayout} style={{fontSize: 12}}>
+				<Form.Item label={'所属目录'} >
 					<div className='form-inline'>
 						{
 							getFieldDecorator('category', {
