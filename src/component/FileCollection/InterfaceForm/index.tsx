@@ -3,7 +3,7 @@ import { Form, Cascader, message as Message, Icon, Input, Select, Button } from 
 import { FormComponentProps } from 'antd/lib/form';
 import { RouteComponentProps } from "react-router-dom";
 import request from 'src/utils/Request';
-import RequestParams from 'src/component/FileCollection/RequestParams/indexBak';
+import RequestParams from 'src/component/FileCollection/RequestParams';
 import ResponseParams from 'src/component/FileCollection/ResponseParams';
 import ErrorCode from 'src/component/FileCollection/ErrorCode';
 import style from './style.module.less';
@@ -31,13 +31,13 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 		this.state = {
 			categoryList: [],
 			requestParams: [
-				{ id: Math.random(), name: '', must: 1, type: 1, desc: '' }
+				{ id: Date.now(), name: '', must: 1, type: 1, desc: '' }
 			],
 			responseParams: [
-				{ id: Math.random(), name: '', nameEng: '', type: 1, description: '', length: 5000, rootId: '', subId: '' }
+				{ id: Date.now(), name: '', nameEng: '', type: 1, description: '', length: 5000, rootId: '', subId: '' }
 			],
 			errorCode: [
-				{ id: Math.random(), name: '', desc: '' }
+				{ id: Date.now(), name: '', desc: '' }
 			],
 			interfacePass: false,
 			responseText: ''
@@ -252,43 +252,10 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 			if (error) {
 				Message.warning('请按规则完善所有字段');
 				return;
+			} else {
+				console.log(value);
+				this.saveAndPostInterface(value);
 			}
-			/* let bOn: boolean = true;
-
-			requestForm.forEach((item, index) => {
-				item.validateFields((e: any) => {
-					if (e) {
-						bOn = false;
-					}
-				})
-			});
-			if (!bOn) {
-				Message.warning('请按规则完善请求参数说明所有字段');
-				return;
-			}
-			responseForm.forEach((item, index) => {
-				item.validateFields((e: any) => {
-					if (e) {
-						bOn = false;
-					}
-				})
-			});
-			if (!bOn) {
-				Message.warning('请按规则完善返回参数说明所有字段');
-				return;
-			}
-			errorForm.forEach((item, index) => {
-				item.validateFields((e: any) => {
-					if (e) {
-						bOn = false;
-					}
-				})
-			});
-			if (!bOn) {
-				Message.warning('请按规则完善错误码说明所有字段');
-				return;
-			} */
-			this.saveAndPostInterface(value);
 		});
 	}
 	private saveAndPostInterface = async (value: any) => {

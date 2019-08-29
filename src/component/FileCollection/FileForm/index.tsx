@@ -81,30 +81,31 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
     return (
       <div className={style.container}>
         <Form {...formItemLayout}>
-          <Form.Item label='所属目录'>
-            {
-              getFieldDecorator('category', {
-                rules: [
-                  { required: true, message: '所属目录不能为空' }
-                ]
-              })(
-                <div className={'form-inline'}>
-	                <Cascader
-		                fieldNames={filedNames}
-		                options={this.state.categoryList}
-		                displayRender={displayRender}
-		                placeholder='请选择所属目录'
-		                style={{ width: 200 }}
-	                />
-	                <p className={'tips'}>
-		                *无关联目录，请先
-		                <span>创建目录！</span>
-		                <Icon type="info-circle" style={{color: 'rgb(47,145,216)', marginLeft: 15}} />
-	                </p>
-                </div>
-              )
-            }
-          </Form.Item>
+	        <Form.Item label={'所属目录'}>
+		        <div className='form-inline'>
+			        {
+				        getFieldDecorator('category', {
+					        rules: [
+						        { required: true, message: '所属目录不能为空' }
+					        ]
+				        })(
+					        <Cascader
+						        fieldNames={filedNames}
+						        displayRender={displayRender}
+						        options={this.state.categoryList}
+						        placeholder={'请选择所属目录'}
+						        style={{ width: 260 }}
+					        />
+
+				        )
+			        }
+			        <p className={'tips'}>
+				        *无关联目录，请先
+				        <span>创建目录！</span>
+				        <Icon type="info-circle" style={{ color: 'rgb(47,145,216)', marginLeft: 15 }} />
+			        </p>
+		        </div>
+	        </Form.Item>
           <Form.Item label='选择上传文件'>
             <div className={style.formRow}>
               <Upload {...props} fileList={this.state.fileList}
