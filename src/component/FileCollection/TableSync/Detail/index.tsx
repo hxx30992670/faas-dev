@@ -1,6 +1,6 @@
 import * as React from 'react';
 import style from "./style.module.less";
-import {Form, Input, message as Message} from 'antd';
+import { Form, Input, message as Message } from 'antd';
 import request from "src/utils/Request";
 
 export interface ITableSyncDetailProps {
@@ -44,7 +44,7 @@ export default class TableSyncDetail extends React.Component<ITableSyncDetailPro
     }
     this.getDetailData();
   }
-  
+
   public render() {
     const formItemLayout = {
       labelCol: {
@@ -56,7 +56,7 @@ export default class TableSyncDetail extends React.Component<ITableSyncDetailPro
         sm: 19
       }
     }
-    const {detailData} = this.state;
+    const { detailData } = this.state;
     return (
       <div className={style.container}>
         <Form {...formItemLayout}>
@@ -73,10 +73,10 @@ export default class TableSyncDetail extends React.Component<ITableSyncDetailPro
             <Input value={detailData.syncType === 1 ? '全量同步' : detailData.syncType === 2 ? '增量同步' : ''} readOnly={true} />
           </Form.Item>
           {
-            detailData.saveType === 2 ? 
-            <Form.Item label='选择时间戳字段'>
-              <Input value={detailData.timestampColumn} readOnly={true} />
-            </Form.Item> : ''
+            detailData.saveType === 2 ?
+              <Form.Item label='选择时间戳字段'>
+                <Input value={detailData.timestampColumn} readOnly={true} />
+              </Form.Item> : ''
           }
           <Form.Item label='同步名称'>
             <Input value={detailData.syncName} readOnly={true} />
@@ -103,18 +103,19 @@ export default class TableSyncDetail extends React.Component<ITableSyncDetailPro
       id: this.props.id
     }
     try {
-      const {status, message, data} = await request.post('/collection/info/Data/selectByPrimaryKey', params, {
+      const { status, message, data } = await request.post('/collection/info/Data/selectByPrimaryKey', params, {
         loading: true,
         loadingTitle: '获取详情数据中……'
       });
-      if(status === 200) {
-        let {detailData} = this.state;
+      if (status === 200) {
+        let { detailData } = this.state;
+
         detailData = {
           name: data.dbSyncAndSourceEntity.dbSourceEntity.name,
           sourceTable: data.dbSyncAndSourceEntity.sourceTable,
           syncStrategy: data.dbSyncAndSourceEntity.syncStrategy,
           syncType: data.dbSyncAndSourceEntity.syncType,
-          saveType: data.dbSyncAndSourceEntity.type,
+          saveType: data.dbSyncAndSourceEntity.syncType,
           timestampColumn: data.dbSyncAndSourceEntity.timestampColumn,
           syncName: data.dbSyncAndSourceEntity.syncName,
           dataName: data.dataEntity.name,
@@ -122,14 +123,21 @@ export default class TableSyncDetail extends React.Component<ITableSyncDetailPro
           purpose: data.dataEntity.purpose,
           dataSource: data.dataEntity.dataSource
         }
+        if (detailData.saveType === 2 && detailData.timestampColumn !== '') {
+          const timestampColumnArr: any[] = data.directoryMetaEntityList.filter(item => {
+            let type: string = item.type.toString();
+            return type.startsWith("4");
+          });
+          const currentTimeStampColumn = timestampColumnArr.find(item => item.nameEng === data.dbSyncAndSourceEntity.timestampColumn);
+          detailData.timestampColumn = currentTimeStampColumn.name;
+        }
         this.setState({
           detailData
         })
-        console.log(data);
       } else {
         Message.warning(message);
       }
-    }catch (e) {
+    } catch (e) {
       Message.error('服务器错误');
     }
   }

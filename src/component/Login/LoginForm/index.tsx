@@ -151,22 +151,26 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
       if (error) {
         message.error('请按规则完善所有字段');
       } else {
-        const { status, data, message: msg } = await request.post("/usergroup/login/userLogin", {
-          code: values.code,
-          ctoken: this.state.cToken,
-          name: values.userName,
-          password: values.password
-        }, { loading: true, loadingTitle: '登陆中……' });
-        if (status === 200) {
-          LocalSave.saveSession('userInfo', data);
-          const { mt } = data;
-          console.log(mt);
-          if ((mt as string).startsWith("data_admin")) {
-            this.props.history.push('/data-manager');
+        try {
+          const { status, data, message: msg } = await request.post("/usergroup/login/userLogin", {
+            code: values.code,
+            ctoken: this.state.cToken,
+            name: values.userName,
+            password: values.password
+          }, { loading: true, loadingTitle: '登陆中……' });
+          if (status === 200) {
+            LocalSave.saveSession('userInfo', data);
+            const { mt } = data;
+            console.log(mt);
+            if ((mt as string).startsWith("data_admin")) {
+              this.props.history.push('/data-manager');
+            }
+          } else {
+            this.getCode();
+            message.warning(msg);
           }
-        } else {
-          this.getCode();
-          message.warning(msg);
+        } catch (e) {
+          message.error('服务器错误');
         }
       }
 
