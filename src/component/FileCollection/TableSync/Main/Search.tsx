@@ -1,14 +1,17 @@
 import React, { ChangeEvent, Component } from 'react';
-import { Select, Input, Icon, Button, Modal } from 'antd';
+import { Select, Input, Icon, Button, Modal, message as Message } from 'antd';
 import style from './style.module.less';
 import { ISearch } from './index';
 import AddTableSync from '../AddTableSync';
+import request from 'src/utils/Request';
 
 export interface ISearchProps {
 	searchValue: ISearch;
 	getTableSyncDataList: () => void;
 	changeSearchValue: (value: ISearch, bOn?: boolean) => void;
-	resetHandler: () => void
+	resetHandler: () => void,
+	selectedRow: any[],
+	getDataList: () => void
 }
 
 export interface ISearchState {
@@ -60,7 +63,7 @@ class Search extends Component<ISearchProps, ISearchState> {
 					<Button type={'primary'} title={'新增'} onClick={this.openNewTableSync}>
 						<Icon type="file-add" theme="filled" />
 					</Button>
-					<Button type='danger' title='删除'>
+					<Button type='danger' title='删除' onClick={this.deleteRows}>
 						<Icon type="delete" theme="filled" />
 					</Button>
 					<Button title={'刷新'} style={{ background: '#a1a7b3', borderColor: '#a1a7b3' }} onClick={this.props.resetHandler}>
@@ -104,6 +107,43 @@ class Search extends Component<ISearchProps, ISearchState> {
 	private closeAddTableSync = () => {
 		this.setState({
 			newTableSyncVisible: false
+		})
+	}
+	private deleteRows = () => {
+		if(!this.props.selectedRow.length) {
+			Message.warning('请选择要删除的数据');
+			return;
+		}
+		const {selectedRow, getDataList} = this.props;
+		Modal.confirm({
+			title: '删除提示',
+			content: `是否确定要删除选中的${selectedRow.length}条数据！`,
+			okText: '确定',
+			cancelText: '取消',
+			onOk: async () => {
+				return new Promise(async (resolve, reject) => {
+					try{
+						let ids = selectedRow.map(item => item.dataId);
+						const {message, status} = await request.post('/collection/info/Data/delete', {idList: ids}, {
+							loading: true,
+							loadingTitle: '正在删除数据中'
+						});
+						if(status === 200) {
+							Message.success('删除数据成功');
+							getDataList();
+							resolve();
+						}else {
+							Message.error(message);
+							reject('错误');
+						}
+					}catch (e) {
+						reject('错误')
+					}
+				});
+			},
+			onCancel: () => {
+				Message.info('取消删除');
+			}
 		})
 	}
 }
