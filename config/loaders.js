@@ -58,7 +58,7 @@ const importPluginOption = [{
     libraryName: 'antd-mobile',
     libraryDirectory: 'lib',
     style: 'css',
-  }
+  },
 ];
 
 // js loader

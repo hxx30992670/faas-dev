@@ -1,7 +1,8 @@
 import * as React from 'react';
-import {Steps, Icon, Form} from 'antd';
+import {Steps, Icon, Form, Button, message} from 'antd';
 import {FormComponentProps} from 'antd/lib/form';
 import OneStep from './OneStep';
+import TwoStep from "./TwoStep";
 import style from './style.module.less';
 
 export interface IAddTableSyncProps extends FormComponentProps {
@@ -10,11 +11,16 @@ export interface IAddTableSyncProps extends FormComponentProps {
 export interface IFormData {
   category: string[],
   sourceDatabase: string;
+  sourceTable: string;
+	fieldList: any[];
+	type: number |string;
+	syncUnit: number | undefined;
 }
 
 export interface IAddTableSyncState {
   currentStep: number;
-  formData: IFormData
+  formData: IFormData;
+	stepStatus: any;
 }
 
 class AddTableSync extends React.Component<IAddTableSyncProps, IAddTableSyncState> {
@@ -22,9 +28,14 @@ class AddTableSync extends React.Component<IAddTableSyncProps, IAddTableSyncStat
     super(props);
     this.state = {
       currentStep: 0,
+	    stepStatus: 'process',
       formData: {
         category: [],
-        sourceDatabase: ''
+        sourceDatabase: '',
+	      sourceTable: '',
+	      fieldList: [],
+	      type: 1,
+	      syncUnit: undefined
       }
     }
   }
@@ -44,6 +55,7 @@ class AddTableSync extends React.Component<IAddTableSyncProps, IAddTableSyncStat
       <div className={style.container}>
         <Steps current={this.state.currentStep}
           onChange={this.changeStep}
+	        status={this.state.stepStatus}
         >
           <Steps.Step icon={<Icon type="setting"
             className={'bigSize'}
@@ -60,9 +72,22 @@ class AddTableSync extends React.Component<IAddTableSyncProps, IAddTableSyncStat
           <Form {...formItemLayou}>
             {
               this.state.currentStep === 0 ? <OneStep {...this.props} formData={this.state.formData}
-                changeFormData={this.changeFormData} /> : ''
+                changeFormData={this.changeFormData} /> : this.state.currentStep === 1 ?
+	              <TwoStep {...this.props} formData={this.state.formData} changeFormData={this.changeFormData} />:''
             }
+            <Form.Item label={' '} colon={false}>
+	            <div className={style.btnBox}>
+		            {
+			            this.state.currentStep > 0 ? <Button type='primary' onClick={this.prevStep}>
+				            上一步
+			            </Button> : ''
+		            }
+		            <Button type='primary' onClick={this.nextStep}>{this.state.currentStep < 2 ? '下一步' : '提交'}</Button>
+		            <Button type='default'>取消</Button>
+	            </div>
+            </Form.Item>
           </Form>
+
         </div>
       </div>
     );
@@ -77,6 +102,35 @@ class AddTableSync extends React.Component<IAddTableSyncProps, IAddTableSyncStat
     this.setState({
       formData: data
     })
+  }
+  private prevStep = () => {
+  	let {currentStep} = this.state;
+  	currentStep -= 1;
+  	this.setState({
+		  currentStep
+	  })
+  }
+  private nextStep = () => {
+  	const {validateFields} = this.props.form;
+	  validateFields((error, value) => {
+	  	if(error) {
+	  		message.warn('请按规则完善所有字段');
+	  		this.setState({
+				  stepStatus: 'error'
+			  });
+	  		return;
+		  }
+		  this.setState({
+			  stepStatus: 'process'
+		  });
+	  	if(this.state.currentStep < 2) {
+	  		let {currentStep} = this.state;
+	  		currentStep += 1;
+	  		this.setState({
+				  currentStep
+			  });
+		  }
+	  })
   }
 }
 

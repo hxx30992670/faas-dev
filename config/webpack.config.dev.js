@@ -110,7 +110,7 @@ module.exports = {
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
       new TsconfigPathsPlugin({
         configFile: paths.appTsConfig
-      }),
+      })
     ],
   },
   module: {
