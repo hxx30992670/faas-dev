@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import style from './style.module.less';
 import Search from './Search';
 import DataList from "./DataList";
-import {message as Message} from "antd";
+import {message as Message, Form} from "antd";
+import {FormComponentProps} from 'antd/lib/form';
 import request from 'src/utils/Request';
 
-export interface ITableSyncMainProps {
+export interface ITableSyncMainProps extends FormComponentProps{
 
 }
 
@@ -55,6 +56,7 @@ class TableSyncMain extends Component<ITableSyncMainProps, ITableSyncMainState> 
           resetHandler={this.resetHandler}
           selectedRow={this.state.selectedRow}
           getDataList={this.getTableSyncDataList}
+	        form={this.props.form}
         />
         <DataList pageValue={this.state.pageValue}
           dataList={this.state.dataList}
@@ -138,4 +140,4 @@ class TableSyncMain extends Component<ITableSyncMainProps, ITableSyncMainState> 
   }
 }
 
-export default TableSyncMain;
+export default Form.create()(TableSyncMain) ;

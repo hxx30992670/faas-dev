@@ -3,9 +3,15 @@ import {Steps, Icon, Form, Button, message} from 'antd';
 import {FormComponentProps} from 'antd/lib/form';
 import OneStep from './OneStep';
 import TwoStep from "./TwoStep";
+import ThreeStep from "./ThreeStep";
 import style from './style.module.less';
 
+export interface IAddTableSyncProps {
+	closeAddTableSync: () => void
+}
+
 export interface IAddTableSyncProps extends FormComponentProps {
+
 }
 
 export interface IFormData {
@@ -15,6 +21,17 @@ export interface IFormData {
 	fieldList: any[];
 	type: number |string;
 	syncUnit: number | undefined;
+	specificTime: string | number;
+	oneWeek: number | string;
+	oneMonth: number | string;
+	oneYear: number | string;
+	syncType: number;
+	timeStamp: number | string;
+	syncName: string;
+	dataName: string;
+	dataDescription: string;
+	dataUse: string;
+	dataSource: string;
 }
 
 export interface IAddTableSyncState {
@@ -27,7 +44,7 @@ class AddTableSync extends React.Component<IAddTableSyncProps, IAddTableSyncStat
   constructor(props) {
     super(props);
     this.state = {
-      currentStep: 0,
+      currentStep: 2,
 	    stepStatus: 'process',
       formData: {
         category: [],
@@ -35,13 +52,27 @@ class AddTableSync extends React.Component<IAddTableSyncProps, IAddTableSyncStat
 	      sourceTable: '',
 	      fieldList: [],
 	      type: 1,
-	      syncUnit: undefined
+	      syncUnit: undefined,
+	      specificTime: '',
+	      oneWeek: '',
+	      oneMonth: '',
+	      oneYear: '',
+	      syncType: 1,
+	      timeStamp: '',
+	      syncName: '',
+	      dataName: '',
+	      dataDescription: '',
+	      dataUse: '',
+	      dataSource: ''
       }
     }
   }
+	public componentDidMount(): void {
+  	console.log(this.props);
+	}
 
-  public render() {
-    const formItemLayou = {
+	public render() {
+    const formItemLayout = {
       labelCol: {
         xs: 24,
         sm: 3
@@ -54,7 +85,7 @@ class AddTableSync extends React.Component<IAddTableSyncProps, IAddTableSyncStat
     return (
       <div className={style.container}>
         <Steps current={this.state.currentStep}
-          onChange={this.changeStep}
+          /*onChange={this.changeStep}*/
 	        status={this.state.stepStatus}
         >
           <Steps.Step icon={<Icon type="setting"
@@ -69,11 +100,13 @@ class AddTableSync extends React.Component<IAddTableSyncProps, IAddTableSyncStat
             title="3、配置数据信息" />
         </Steps>
         <div className={style.formWrap}>
-          <Form {...formItemLayou}>
+          <Form {...formItemLayout}>
             {
               this.state.currentStep === 0 ? <OneStep {...this.props} formData={this.state.formData}
                 changeFormData={this.changeFormData} /> : this.state.currentStep === 1 ?
-	              <TwoStep {...this.props} formData={this.state.formData} changeFormData={this.changeFormData} />:''
+	              <TwoStep {...this.props} formData={this.state.formData} changeFormData={this.changeFormData} />:
+	              this.state.currentStep === 2 ?
+	              <ThreeStep {...this.props} formData={this.state.formData} changeFormData={this.changeFormData} /> : ''
             }
             <Form.Item label={' '} colon={false}>
 	            <div className={style.btnBox}>
@@ -83,7 +116,7 @@ class AddTableSync extends React.Component<IAddTableSyncProps, IAddTableSyncStat
 			            </Button> : ''
 		            }
 		            <Button type='primary' onClick={this.nextStep}>{this.state.currentStep < 2 ? '下一步' : '提交'}</Button>
-		            <Button type='default'>取消</Button>
+		            <Button type='default' onClick={this.props.closeAddTableSync}>取消</Button>
 	            </div>
             </Form.Item>
           </Form>
@@ -93,11 +126,11 @@ class AddTableSync extends React.Component<IAddTableSyncProps, IAddTableSyncStat
     );
   }
 
-  private changeStep = (val) => {
+  /*private changeStep = (val) => {
     this.setState({
       currentStep: val
     })
-  }
+  }*/
   private changeFormData = (data: any) => {
     this.setState({
       formData: data
@@ -134,4 +167,4 @@ class AddTableSync extends React.Component<IAddTableSyncProps, IAddTableSyncStat
   }
 }
 
-export default Form.create()(AddTableSync);
+export default AddTableSync;

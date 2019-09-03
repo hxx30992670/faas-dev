@@ -1,11 +1,12 @@
 import React, { ChangeEvent, Component } from 'react';
 import { Select, Input, Icon, Button, Modal, message as Message } from 'antd';
+import {FormComponentProps} from 'antd/lib/form';
 import style from './style.module.less';
 import { ISearch } from './index';
 import AddTableSync from '../AddTableSync';
 import request from 'src/utils/Request';
 
-export interface ISearchProps {
+export interface ISearchProps extends FormComponentProps{
 	searchValue: ISearch;
 	getTableSyncDataList: () => void;
 	changeSearchValue: (value: ISearch, bOn?: boolean) => void;
@@ -80,10 +81,11 @@ class Search extends Component<ISearchProps, ISearchState> {
 					visible={this.state.newTableSyncVisible} title='新建库表同步'
 	        maskClosable={false}
 					width={'60%'}
+					destroyOnClose={true}
 					onCancel={this.closeAddTableSync}
 					footer={null}
 				>
-					<AddTableSync />
+					<AddTableSync form={this.props.form} closeAddTableSync={this.closeAddTableSync} />
 				</Modal>
 			</div>
 		);
