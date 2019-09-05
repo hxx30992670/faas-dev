@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {Steps, Icon, Form, Button, message} from 'antd';
+import {Steps, Icon, Form, Button, message as Message} from 'antd';
 import {FormComponentProps} from 'antd/lib/form';
 import OneStep from './OneStep';
 import TwoStep from "./TwoStep";
 import ThreeStep from "./ThreeStep";
+import request from 'src/utils/Request';
 import style from './style.module.less';
 
 export interface IAddTableSyncProps {
@@ -15,7 +16,7 @@ export interface IAddTableSyncProps extends FormComponentProps {
 }
 
 export interface IFormData {
-  category: string[],
+  category: string[] | string,
   sourceDatabase: string;
   sourceTable: string;
 	fieldList: any[];
@@ -44,10 +45,10 @@ class AddTableSync extends React.Component<IAddTableSyncProps, IAddTableSyncStat
   constructor(props) {
     super(props);
     this.state = {
-      currentStep: 2,
+      currentStep: 0,
 	    stepStatus: 'process',
       formData: {
-        category: [],
+        category: '',
         sourceDatabase: '',
 	      sourceTable: '',
 	      fieldList: [],
@@ -145,9 +146,9 @@ class AddTableSync extends React.Component<IAddTableSyncProps, IAddTableSyncStat
   }
   private nextStep = () => {
   	const {validateFields} = this.props.form;
-	  validateFields((error, value) => {
+	  validateFields(async (error, value) => {
 	  	if(error) {
-	  		message.warn('请按规则完善所有字段');
+	  		Message.warn('请按规则完善所有字段');
 	  		this.setState({
 				  stepStatus: 'error'
 			  });
@@ -162,9 +163,50 @@ class AddTableSync extends React.Component<IAddTableSyncProps, IAddTableSyncStat
 	  		this.setState({
 				  currentStep
 			  });
+		  } else {
+	  		const {formData} = this.state;
+	  		const params = {
+	  			rootId: formData.category[0],
+				  subId: formData.category[1],
+				  dbSourceId: formData.sourceDatabase,
+				  sourceTable: formData.sourceTable,
+				  hour: formData.specificTime,
+				  week: formData.oneWeek,
+				  day: formData.oneMonth,
+				  type: formData.type,
+				  syncUnit: formData.syncUnit,
+				  month: formData.oneYear,
+				  syncType: formData.syncType,
+				  timestampColumn: formData.timeStamp,
+				  syncName: formData.syncName,
+				  dataName: formData.dataName,
+				  purpose: formData.dataUse,
+				  dataSource: formData.dataSource,
+				  description: formData.dataDescription,
+				  metaInsertParam: formData.fieldList.map(item => {
+				  	item.rootId = formData.category[0];
+				  	item.subId = formData.category[1];
+				  	return item;
+				  })
+			  }
+			  try{
+	  			const {status, message} = await request.post('/collection/info/DbSync/createSync', params, {
+	  				loading: true,
+					  loadingTitle: '正在创建库表同步中……'
+				  });
+	  			if(status === 200) {
+	  				Message.success('创建成功').then(() => {
+	  					this.props.closeAddTableSync();
+					  }, () => {})
+				  } else {
+	  				Message.warn(message);
+				  }
+			  }catch (e) {
+				  Message.error('服务器错误');
+			  }
 		  }
 	  })
   }
 }
 
-export default AddTableSync;
+export default Form.create<IAddTableSyncProps>()(AddTableSync);

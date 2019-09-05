@@ -1,12 +1,11 @@
 import React, { ChangeEvent, Component } from 'react';
-import { Select, Input, Icon, Button, Modal, message as Message } from 'antd';
-import {FormComponentProps} from 'antd/lib/form';
+import { Select, Input, Icon, Button, Modal, message as Message} from 'antd';
 import style from './style.module.less';
 import { ISearch } from './index';
 import AddTableSync from '../AddTableSync';
 import request from 'src/utils/Request';
 
-export interface ISearchProps extends FormComponentProps{
+export interface ISearchProps{
 	searchValue: ISearch;
 	getTableSyncDataList: () => void;
 	changeSearchValue: (value: ISearch, bOn?: boolean) => void;
@@ -70,10 +69,10 @@ class Search extends Component<ISearchProps, ISearchState> {
 					<Button title={'刷新'} style={{ background: '#a1a7b3', borderColor: '#a1a7b3' }} onClick={this.props.resetHandler}>
 						<Icon type="redo" style={{ color: '#fff' }} />
 					</Button>
-					<Button title='启动' style={{ background: '#27ca8e', borderColor: '#27ca8e' }}>
+					<Button title='启动' style={{ background: '#27ca8e', borderColor: '#27ca8e' }} onClick={this.startMoreTable}>
 						<Icon type="play-square" theme="filled" style={{ color: '#fff' }} />
 					</Button>
-					<Button title='暂停' style={{ background: '#f4ab37', borderColor: '#f4ab37' }}>
+					<Button title='暂停' style={{ background: '#f4ab37', borderColor: '#f4ab37' }} onClick={this.stopMoreTable}>
 						<Icon type="pause-circle" theme="filled" style={{ color: '#fff' }} />
 					</Button>
 				</div>
@@ -85,10 +84,14 @@ class Search extends Component<ISearchProps, ISearchState> {
 					onCancel={this.closeAddTableSync}
 					footer={null}
 				>
-					<AddTableSync form={this.props.form} closeAddTableSync={this.closeAddTableSync} />
+					<AddTableSync closeAddTableSync={this.closeAddAndGetData} />
 				</Modal>
 			</div>
 		);
+	}
+	private closeAddAndGetData = () => {
+		this.closeAddTableSync();
+		this.props.getTableSyncDataList();
 	}
 	//搜索栏选择类型
 	private selectStatus = (val) => {
@@ -109,6 +112,78 @@ class Search extends Component<ISearchProps, ISearchState> {
 	private closeAddTableSync = () => {
 		this.setState({
 			newTableSyncVisible: false
+		})
+	}
+	private stopMoreTable = () => {
+		if(!this.props.selectedRow.length) {
+			Message.warning('请选择要停止的数据');
+			return;
+		}
+		const {selectedRow, getDataList} = this.props;
+		Modal.confirm({
+			title: '启动',
+			content: `是否确定要停止选中的${selectedRow.length}条数据`,
+			okText: '确定',
+			cancelText: '取消',
+			onOk: () => {
+				return new Promise(async (resolve, reject) => {
+					try {
+						const ids = selectedRow.map(item => item.id);
+						const {status, message} = await request.post('/collection/data/sync/stopTask', {
+							ids
+						}, {
+							loading: true,
+							loadingTitle: `停止中……`
+						});
+						if(status === 200) {
+							Message.success('停止成功');
+							getDataList();
+							resolve('成功');
+						} else {
+							Message.warn(message);
+							reject(message);
+						}
+					}catch (e) {
+						Message.error('服务器错误');
+					}
+				})
+			}
+		})
+	}
+	private startMoreTable = () => {
+		if(!this.props.selectedRow.length) {
+			Message.warning('请选择要启动的数据');
+			return;
+		}
+		const {selectedRow, getDataList} = this.props;
+		Modal.confirm({
+			title: '启动',
+			content: `是否确定要启动选中的${selectedRow.length}条数据`,
+			okText: '确定',
+			cancelText: '取消',
+			onOk: () => {
+				return new Promise(async (resolve, reject) => {
+					try {
+						const ids = selectedRow.map(item => item.id);
+						const {status, message} = await request.post('/collection/data/sync/startTask', {
+							ids
+						}, {
+							loading: true,
+							loadingTitle: `启动中……`
+						});
+						if(status === 200) {
+							Message.success('启动成功');
+							getDataList();
+							resolve('成功');
+						} else {
+							Message.warn(message);
+							reject(message);
+						}
+					}catch (e) {
+						Message.error('服务器错误');
+					}
+				})
+			}
 		})
 	}
 	private deleteRows = () => {

@@ -5,4 +5,6 @@ export const input: string;
 export const datePicker: string;
 export const searchResult: string;
 export const tableWrap: string;
+export const tips: string;
+export const span: string;
 export const opeartionBox: string;
