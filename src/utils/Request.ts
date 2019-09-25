@@ -24,7 +24,6 @@ const request = async (url: string, options: any) => {
     })
   }
 
-  // setTimeout(() => function())
 
   return axios.request({
     url,

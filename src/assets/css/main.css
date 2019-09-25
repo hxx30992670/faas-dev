@@ -9,17 +9,34 @@ ol,
 p {
   margin: 0;
 }
+body * {
+  font-size: 12px;
+}
 html,
 body,
 #root,
 .App {
   height: 100%;
 }
-.loading-wrap {
-  background: rgba(0, 0, 0, 0.7) !important;
+.test-wrap {
+  position: fixed;
+  /*
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;*/
+  left: 0;
+  top: 0;
+  background: rgba(255, 255, 255, 0.7) !important;
   width: 100%;
   height: 100%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 9999999;
+  justify-content: center;
+}
+.loading-wrap {
   /*&>div:nth-child(1){
     width: 100%;
     height: 100%;
@@ -29,14 +46,18 @@ body,
     background: none;
   }*/
 }
-.loading-wrap .test-wrap {
-  left: 50% !important;
-  top: 50% !important;
-  transform: translate(-50%, -50%) !important;
-}
 .loading-wrap .ant-spin-container {
   height: 100%;
   color: #fff;
+}
+.editable-row td {
+  padding: 5px !important;
+}
+.editable-row td .ant-form-item {
+  margin: 0 !important;
+}
+.bigSize svg {
+  font-size: 20px;
 }
 .App {
   box-sizing: border-box;
@@ -49,8 +70,17 @@ body,
 .App .ant-tabs-tabpane {
   background: #fff;
 }
+.App .ant-tabs-tabpane .ant-tree-treenode-switcher-close {
+  padding: 8px 0;
+}
+.App .ant-tabs-tabpane .ant-tree-node-content-wrapper {
+  width: 85%;
+}
 .App .ant-tabs-tabpane .tabs-wrap {
   padding: 15px;
+}
+.App .ant-tabs-tabpane .tabs-wrap .ant-form-item label {
+  font-size: 12px !important;
 }
 .App .ant-tabs-tabpane .tabs-wrap .form-inline {
   display: flex;
@@ -63,11 +93,11 @@ body,
   cursor: pointer;
   color: #f4ab37;
 }
-.App .ant-tabs-tabpane .tabs-wrap .editable-row td {
-  padding: 5px !important;
+.App .ant-tabs-tabpane .ant-table {
+  font-size: 12px;
 }
-.App .ant-tabs-tabpane .tabs-wrap .editable-row td .ant-form-item {
-  margin: 0 !important;
+.App .ant-tabs-tabpane .ant-table th {
+  font-weight: bold;
 }
 .App .ant-tabs-tabpane .main-container {
   padding: 10px;
@@ -95,6 +125,7 @@ body,
 }
 .main-menu .ant-menu .ant-menu-item a {
   color: #fff;
+  font-size: 14px;
 }
 .main-menu .ant-menu .ant-menu-item-selected {
   background: #39476b;
@@ -170,4 +201,22 @@ body,
 }
 .transform-exit-done {
   transform: translateX(100%);
+}
+.custom-table td {
+  padding: 8px 16px !important;
+}
+.validate-icon {
+  display: flex;
+  align-items: center;
+}
+.validate-icon span {
+  margin-left: 10px;
+  font-size: 14px;
+}
+.validate-icon svg {
+  font-size: 30px;
+}
+.ant-modal-header {
+  background: #EDF1F2;
+  font-size: 18px !important;
 }

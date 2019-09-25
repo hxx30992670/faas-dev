@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Form, Cascader, message as Message, Icon, Input, Select, Button } from "antd";
-import { FormComponentProps } from 'antd/lib/form';
-import { RouteComponentProps } from "react-router-dom";
+import {Form, Cascader, message as Message, Icon, Input, Select, Button} from "antd";
+import {FormComponentProps} from 'antd/lib/form';
+import {RouteComponentProps} from "react-router-dom";
 import request from 'src/utils/Request';
 import RequestParams from 'src/component/FileCollection/RequestParams';
 import ResponseParams from 'src/component/FileCollection/ResponseParams';
@@ -13,9 +13,11 @@ import style from './style.module.less';
 export interface IInterfaceFormProps extends FormComponentProps {
 
 }
+
 export interface IInterfaceFormProps extends RouteComponentProps {
 
 }
+
 export interface IInterfaceFormState {
 	categoryList: any[];
 	requestParams: any[];
@@ -25,19 +27,19 @@ export interface IInterfaceFormState {
 	responseText: string
 }
 
-class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormState>{
+class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormState> {
 	constructor(props) {
 		super(props);
 		this.state = {
 			categoryList: [],
 			requestParams: [
-				{ id: Date.now(), name: '', must: 1, type: 1, desc: '' }
+				{id: Date.now(), name: '', must: 1, type: 1, desc: ''}
 			],
 			responseParams: [
-				{ id: Date.now(), name: '', nameEng: '', type: 1, description: '', length: 5000, rootId: '', subId: '' }
+				{id: Date.now(), name: '', nameEng: '', type: 1, description: '', length: 5000, rootId: '', subId: ''}
 			],
 			errorCode: [
-				{ id: Date.now(), name: '', desc: '' }
+				{id: Date.now(), name: '', desc: ''}
 			],
 			interfacePass: false,
 			responseText: ''
@@ -46,15 +48,15 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 	}
 
 	public render() {
-		const { getFieldDecorator } = this.props.form;
+		const {getFieldDecorator} = this.props.form;
 		const formItemLayout = {
 			labelCol: {
-				xs: { span: 24 },
-				sm: { span: 2 }
+				xs: {span: 24},
+				sm: {span: 2}
 			},
 			wrapperCol: {
-				xs: { span: 24 },
-				sm: { span: 19 }
+				xs: {span: 24},
+				sm: {span: 19}
 			}
 		}
 		const filedNames = {
@@ -69,7 +71,7 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 		/*验证数据名称是否重复*/
 		const repeatName = async (rule, value, callBack) => {
 			if (value) {
-				const { status } = await request.post('/collection/info/Data/selectDataByName', { name: value });
+				const {status} = await request.post('/collection/info/Data/selectDataByName', {name: value});
 				if (status === 200) {
 					callBack();
 				} else {
@@ -82,12 +84,12 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 
 		return (
 			<Form {...formItemLayout} style={{fontSize: 12}}>
-				<Form.Item label={'所属目录'} >
+				<Form.Item label={'所属目录'}>
 					<div className='form-inline'>
 						{
 							getFieldDecorator('category', {
 								rules: [
-									{ required: true, message: '所属目录不能为空' }
+									{required: true, message: '所属目录不能为空'}
 								]
 							})(
 								<Cascader
@@ -95,15 +97,14 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 									displayRender={displayRender}
 									options={this.state.categoryList}
 									placeholder={'请选择所属目录'}
-									style={{ width: 260 }}
+									style={{width: 260}}
 								/>
-
 							)
 						}
 						<p className={'tips'}>
 							*无关联目录，请先
-									<span>创建目录！</span>
-							<Icon type="info-circle" style={{ color: 'rgb(47,145,216)', marginLeft: 15 }} />
+							<span>创建目录！</span>
+							<Icon type="info-circle" style={{color: 'rgb(47,145,216)', marginLeft: 15}}/>
 						</p>
 					</div>
 				</Form.Item>
@@ -112,13 +113,13 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 						getFieldDecorator('dataName', {
 							validateTrigger: ['onBlur'],
 							rules: [
-								{ required: true, message: '数据名称不能为空' },
-								{ max: 50, message: '数据名称长度不能超过50' },
-								{ pattern: /^[^\s]+$/g, message: '数据名称不能有空格' },
-								{ validator: repeatName }
+								{required: true, message: '数据名称不能为空'},
+								{max: 50, message: '数据名称长度不能超过50'},
+								{pattern: /^[^\s]+$/g, message: '数据名称不能有空格'},
+								{validator: repeatName}
 							]
 						})(
-							<Input placeholder={'请输入'} />
+							<Input placeholder={'请输入'}/>
 						)
 					}
 				</Form.Item>
@@ -127,12 +128,12 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 						getFieldDecorator('dataDescription', {
 							validateTrigger: ['onBlur'],
 							rules: [
-								{ required: true, message: '数据描述不能为空' },
-								{ max: 100, message: '数据描述长度不能超过100' },
-								{ pattern: /^[^\s]+$/g, message: '数据描述不能有空格' }
+								{required: true, message: '数据描述不能为空'},
+								{max: 100, message: '数据描述长度不能超过100'},
+								{pattern: /^[^\s]+$/g, message: '数据描述不能有空格'}
 							]
 						})(
-							<Input placeholder={'请输入'} />
+							<Input placeholder={'请输入'}/>
 						)
 					}
 				</Form.Item>
@@ -141,12 +142,12 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 						getFieldDecorator('dataUse', {
 							validateTrigger: ['onBlur'],
 							rules: [
-								{ required: true, message: '数据用途不能为空' },
-								{ max: 100, message: '数据用途长度不能超过100' },
-								{ pattern: /^[^\s]+$/g, message: '数据用途不能有空格' }
+								{required: true, message: '数据用途不能为空'},
+								{max: 100, message: '数据用途长度不能超过100'},
+								{pattern: /^[^\s]+$/g, message: '数据用途不能有空格'}
 							]
 						})(
-							<Input placeholder={'请输入'} />
+							<Input placeholder={'请输入'}/>
 						)
 					}
 				</Form.Item>
@@ -155,12 +156,12 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 						getFieldDecorator('dataSource', {
 							validateTrigger: ['onBlur'],
 							rules: [
-								{ required: true, message: '所属系统不能为空' },
-								{ max: 100, message: '所属系统长度不能超过100' },
-								{ pattern: /^[^\s]+$/g, message: '所属系统不能有空格' }
+								{required: true, message: '所属系统不能为空'},
+								{max: 100, message: '所属系统长度不能超过100'},
+								{pattern: /^[^\s]+$/g, message: '所属系统不能有空格'}
 							]
 						})(
-							<Input placeholder={'请输入'} />
+							<Input placeholder={'请输入'}/>
 						)
 					}
 				</Form.Item>
@@ -169,12 +170,12 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 						getFieldDecorator('interfaceAddress', {
 							validateTrigger: ['onBlur'],
 							rules: [
-								{ required: true, message: '接口地址不能为空' },
-								{ max: 100, message: '接口地址长度不能超过100' },
-								{ pattern: /^[^\s]+$/g, message: '接口地址不能有空格' }
+								{required: true, message: '接口地址不能为空'},
+								{max: 100, message: '接口地址长度不能超过100'},
+								{pattern: /^[^\s]+$/g, message: '接口地址不能有空格'}
 							]
 						})(
-							<Input placeholder={'请输入'} />
+							<Input placeholder={'请输入'}/>
 						)
 					}
 				</Form.Item>
@@ -182,11 +183,11 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 					{
 						getFieldDecorator('responseFormat', {
 							rules: [
-								{ required: true, message: '返回格式不能为空' }
+								{required: true, message: '返回格式不能为空'}
 							],
 							initialValue: 1
 						})(
-							<Select style={{ width: 260 }}>
+							<Select style={{width: 260}}>
 								<Select.Option value={1}>JSON</Select.Option>
 								<Select.Option value={2}>XML</Select.Option>
 							</Select>
@@ -197,11 +198,11 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 					{
 						getFieldDecorator('requestMethod', {
 							rules: [
-								{ required: true, message: '请求方式不能为空' }
+								{required: true, message: '请求方式不能为空'}
 							],
 							initialValue: 1
 						})(
-							<Select style={{ width: 260 }}>
+							<Select style={{width: 260}}>
 								<Select.Option value={1}>GET</Select.Option>
 								<Select.Option value={2}>POST</Select.Option>
 							</Select>
@@ -209,10 +210,11 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 					}
 				</Form.Item>
 				<Form.Item label={<span><i className={style.red}>*</i>请求参数说明</span>}>
-					<RequestParams {...this.props} fieldList={this.state.requestParams} changeFields={this.changeRequestParams} />
+					<RequestParams {...this.props} fieldList={this.state.requestParams} changeFields={this.changeRequestParams}/>
 				</Form.Item>
 				<Form.Item label={<span><i className={style.red}>*</i>返回参数说明</span>}>
-					<ResponseParams fieldList={this.state.responseParams} changeFields={this.changeResponseParams} {...this.props} />
+					<ResponseParams fieldList={this.state.responseParams}
+						changeFields={this.changeResponseParams} {...this.props} />
 				</Form.Item>
 				<Form.Item label={<span><i className={style.red}>*</i>错误码说明</span>}>
 					<ErrorCode fieldList={this.state.errorCode} changeFields={this.changeErrorCode} {...this.props} />
@@ -221,17 +223,17 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 					{
 						getFieldDecorator('callExample', {
 							rules: [
-								{ required: true, message: '调用示例不能为空' },
+								{required: true, message: '调用示例不能为空'},
 							]
 						})(
-							<Input.TextArea autosize={{ minRows: 4, maxRows: 8 }} placeholder={'请输入'} />
+							<Input.TextArea autosize={{minRows: 4, maxRows: 8}} placeholder={'请输入'}/>
 						)
 					}
 				</Form.Item>
 				{
 					this.state.interfacePass ? (
 						<Form.Item label={<span>返回示例</span>}>
-							<Input.TextArea readOnly={true} value={this.state.responseText} />
+							<Input.TextArea readOnly={true} value={this.state.responseText}/>
 						</Form.Item>
 					) : ''
 				}
@@ -247,6 +249,7 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 			</Form>
 		)
 	}
+
 	private submitHandler = async () => {
 		this.props.form.validateFields((error: any, value) => {
 			if (error) {
@@ -282,7 +285,7 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 				rootId: value.category[0],
 				subId: value.category[1]
 			}
-			const { status, message } = await request.post('/collection/info/DataApi/insert', params, {
+			const {status, message} = await request.post('/collection/info/DataApi/insert', params, {
 				loading: true,
 				loadingTitle: '接口注册中……'
 			});
@@ -311,9 +314,9 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 						paramType: value.responseFormat,
 						url: value.interfaceAddress
 					}
-					const { status, data, message } = await request.post('/collection/info/validateOnlineController/OnlineValidateInterface',
+					const {status, data, message} = await request.post('/collection/info/validateOnlineController/OnlineValidateInterface',
 						params,
-						{ loading: true, loadingTitle: '接口测试中……' });
+						{loading: true, loadingTitle: '接口测试中……'});
 					if (status === 200) {
 						const result = typeof data === 'string' ? JSON.parse(data) : data;
 						if (result.status === 200) {
@@ -351,7 +354,7 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 	}
 	private getCategoryList = async () => {
 		try {
-			const { status, message, data } = await request.post('/collection/info/DirectoryRoot/listRootAndSupDirectory', {}, {
+			const {status, message, data} = await request.post('/collection/info/DirectoryRoot/listRootAndSupDirectory', {}, {
 				loading: true,
 				loadingTitle: '获取目录列表中……'
 			});

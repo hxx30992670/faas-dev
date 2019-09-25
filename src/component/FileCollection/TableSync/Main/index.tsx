@@ -43,10 +43,12 @@ class TableSyncMain extends Component<ITableSyncMainProps, ITableSyncMainState> 
       },
       selectedRow: []
     }
-    this.getTableSyncDataList();
+  }
+  public componentDidMount(): void {
+	  this.getTableSyncDataList();
   }
 
-  public render() {
+	public render() {
     return (
       <div className={style.container}>
         <Search getTableSyncDataList={this.getTableSyncDataList}

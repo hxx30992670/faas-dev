@@ -12,6 +12,7 @@ import DataList from 'src/views/DataManager/DataManager/DataList';
 import CategoryManager from 'src/views/DataManager/DataManager/CategoryManager';
 import GovernmentList from 'src/views/DataManager/DataGovernment/GovernmentList';
 import DataTrace from 'src/views/DataManager/DataGovernment/DataTrace';
+import BusinessSynergy from 'src/views/DataManager/BusinessSynergy'
 import { changeRoute } from "src/actions";
 import { connect } from 'react-redux';
 import { StoreState } from 'src/types';
@@ -103,6 +104,7 @@ class MainTemplate extends React.Component<IMainTemplateProps, IMainTemplateStat
 							    <Route path={`${match.path}/file-collection`} component={FileCollection} />
 							    <Route path={`${match.path}/interface-register`} component={InterfaceRegister} />
 							    <Route path={`${match.path}/table-sync`} component={TableSync} />
+							    <Route path={`${match.path}/business-synergy`} component={BusinessSynergy} />
 							    <Route path={`${match.path}/data-list`} component={DataList} />
 							    <Route path={`${match.path}/category-manager`} component={CategoryManager} />
 							    <Route path={`${match.path}/government-list`} component={GovernmentList} />

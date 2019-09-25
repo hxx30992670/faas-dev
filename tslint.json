@@ -24,6 +24,9 @@
     "jsx-no-string-ref": false,
     "max-classes-per-file": false,
     "prefer-const": false,
-    "comment-format": false
+    "comment-format": false,
+    "jsx-no-lambda": false,
+    "prefer-for-of": false,
+    "variable-name": false
   }
 }

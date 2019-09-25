@@ -61,7 +61,11 @@ class MainMenu extends React.Component<IMainMenuProps, IMainMenuState> {
             {
               path: '/data-manager/table-sync',
               name: '库表同步'
-            }
+            },
+	          {
+	          	path: '/data-manager/business-synergy',
+		          name: '业务协同'
+	          }
           ]
         },
         {

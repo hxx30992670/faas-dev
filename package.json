@@ -22,6 +22,7 @@
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
     "jest": "22.4.2",
+    "jsencrypt": "^3.0.0-rc.1",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "moment": "^2.24.0",
@@ -67,6 +68,7 @@
     "test": "node scripts/test.js --env=jsdom"
   },
   "devDependencies": {
+    "@hot-loader/react-dom": "^16.9.0",
     "@types/jest": "^24.0.17",
     "@types/moment": "^2.13.0",
     "@types/node": "^12.7.2",

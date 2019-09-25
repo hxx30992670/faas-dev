@@ -6,6 +6,7 @@ import style from './style.module.less';
 import { StoreState } from 'src/types/index';
 import request from 'src/utils/Request';
 import LocalSave from 'src/utils/LocalSave';
+import JSEncrypt from 'jsencrypt/bin/jsencrypt';
 import { RouteComponentProps } from 'react-router-dom';
 interface ILoginFormProps extends FormComponentProps {
   loading: boolean,
@@ -16,19 +17,21 @@ interface ILoginFormProps extends RouteComponentProps {
 }
 export interface ILoginFormState {
   code: string,
-  cToken: string
+  cToken: string;
+  publicKey: string;
 }
 const mapStateToProps = (state: StoreState) => ({
   loading: state.loading,
   loadingTitle: state.loadingTitle
 })
-
+const jsEncrypt = new JSEncrypt();
 class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
   constructor(props) {
     super(props);
     this.state = {
       code: '',
-      cToken: ''
+      cToken: '',
+      publicKey: ''
     }
   }
 
@@ -106,9 +109,10 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
                 })(
                   <div className={style.codeWrap}>
                     <Input
+                      onPressEnter={this.submitLogin}
                     />
                     {
-                      this.state.code && <img src={this.state.code} alt="" />
+                      this.state.code && <img src={this.state.code} alt="" onClick={this.getCode} />
                     }
                   </div>
                 )
@@ -126,12 +130,13 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
   // 获取验证码
   public getCode = async () => {
     try {
-      const result: any = await request.post('/usergroup/login/verificationCode', {}, { loading: true });
+      const result: any = await request.post('/usergroup/login/verificationCode', {}, { loading: true, loadingTitle: '正在获取验证码' });
       if (result.status === 200) {
         console.log(result.img);
         this.setState({
           code: result.img,
-          cToken: result.token
+          cToken: result.token,
+          publicKey: result.publicKey
         });
       }
     } catch (e) {
@@ -151,12 +156,14 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
       if (error) {
         message.error('请按规则完善所有字段');
       } else {
+        jsEncrypt.setPublicKey(this.state.publicKey);
         try {
+
           const { status, data, message: msg } = await request.post("/usergroup/login/userLogin", {
             code: values.code,
             ctoken: this.state.cToken,
             name: values.userName,
-            password: values.password
+            password: jsEncrypt.encrypt(values.password)
           }, { loading: true, loadingTitle: '登陆中……' });
           if (status === 200) {
             LocalSave.saveSession('userInfo', data);

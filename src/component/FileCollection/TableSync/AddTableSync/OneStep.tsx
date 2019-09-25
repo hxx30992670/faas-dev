@@ -1,8 +1,8 @@
-import React, {ChangeEvent, Component} from 'react';
-import {Form, Cascader, message as Message, Select, Table, Input} from "antd";
-import {FormComponentProps} from 'antd/lib/form';
+import React, { ChangeEvent, Component } from 'react';
+import { Form, Cascader, message as Message, Select, Table, Input } from "antd";
+import { FormComponentProps } from 'antd/lib/form';
 import request from "src/utils/Request";
-import {IFormData} from './index';
+import { IFormData } from './index';
 import style from './style.module.less'
 
 
@@ -27,6 +27,8 @@ class OneStep extends Component<IOneStepProps, IOneStepState> {
 			sourceTableList: [],
 			fieldList: []
 		}
+	}
+	public componentDidMount(): void {
 		this.getCategoryList();
 		this.getSourceDatabase();
 		if (this.props.formData.sourceDatabase) {
@@ -35,8 +37,8 @@ class OneStep extends Component<IOneStepProps, IOneStepState> {
 	}
 
 	public render() {
-		const {getFieldDecorator} = this.props.form;
-		const {formData} = this.props;
+		const { getFieldDecorator } = this.props.form;
+		const { formData } = this.props;
 		const displayRender = (fields) => {
 			return fields[fields.length - 1];
 		};
@@ -54,10 +56,10 @@ class OneStep extends Component<IOneStepProps, IOneStepState> {
 						{
 							getFieldDecorator('fieldName' + row.nameEng, {
 								rules: [
-									{required: true, message: '中文名称不能为空'}
+									{ required: true, message: '中文名称不能为空' }
 								],
 								initialValue: value,
-							})(<Input placeholder={'请输入'} onChange={this.changeFieldName.bind(this, row, 'name')}/>)
+							})(<Input placeholder={'请输入'} onChange={this.changeFieldName.bind(this, row, 'name')} />)
 						}
 					</Form.Item>
 				)
@@ -91,11 +93,11 @@ class OneStep extends Component<IOneStepProps, IOneStepState> {
 						{
 							getFieldDecorator('fieldDescription' + row.nameEng, {
 								rules: [
-									{required: true, message: '说明不能为空'}
+									{ required: true, message: '说明不能为空' }
 								],
 								initialValue: value
 							})(
-								<Input onChange={this.changeFieldName.bind(this, row, 'description')}/>
+								<Input onChange={this.changeFieldName.bind(this, row, 'description')} />
 							)
 						}
 					</Form.Item>
@@ -109,7 +111,7 @@ class OneStep extends Component<IOneStepProps, IOneStepState> {
 					{
 						getFieldDecorator('category', {
 							rules: [
-								{required: true, message: '所属目录不能为空'}
+								{ required: true, message: '所属目录不能为空' }
 							],
 							initialValue: formData.category
 						})(
@@ -118,7 +120,7 @@ class OneStep extends Component<IOneStepProps, IOneStepState> {
 								displayRender={displayRender}
 								options={this.state.categoryList}
 								placeholder={'请选择所属目录'}
-								style={{width: 260}}
+								style={{ width: 260 }}
 								onChange={this.changeCategory}
 							/>
 						)
@@ -128,11 +130,11 @@ class OneStep extends Component<IOneStepProps, IOneStepState> {
 					{
 						getFieldDecorator('sourceDatabase', {
 							rules: [
-								{required: true, message: '源数据不能为空'}
+								{ required: true, message: '源数据不能为空' }
 							],
 							initialValue: formData.sourceDatabase
 						})(
-							<Select style={{width: 260}} onChange={this.changeSourceDatabase}>
+							<Select style={{ width: 260 }} onChange={this.changeSourceDatabase}>
 								{
 									this.state.sourceDatabaseList.map((item) => (
 										<Select.Option key={item.id} value={item.id}>{item.name}</Select.Option>
@@ -146,11 +148,11 @@ class OneStep extends Component<IOneStepProps, IOneStepState> {
 					{
 						getFieldDecorator('sourceTable', {
 							rules: [
-								{required: true, message: '源表不能为空'}
+								{ required: true, message: '源表不能为空' }
 							],
 							initialValue: formData.sourceTable
 						})(
-							<Select key={'2'} disabled={this.props.formData.sourceDatabase === ''} style={{width: 260}}
+							<Select key={'2'} disabled={this.props.formData.sourceDatabase === ''} style={{ width: 260 }}
 								onChange={this.changeSourceTable}>
 								{
 									this.state.sourceTableList.map((item, index) => (
@@ -174,7 +176,7 @@ class OneStep extends Component<IOneStepProps, IOneStepState> {
 
 	private getCategoryList = async () => {
 		try {
-			const {data, message, status} = await request.post("/collection/info/DirectoryRoot/listRootAndSupDirectory", {}, {
+			const { data, message, status } = await request.post("/collection/info/DirectoryRoot/listRootAndSupDirectory", {}, {
 				loading: true,
 				loadingTitle: '获取目录数据中……'
 			});
@@ -193,7 +195,7 @@ class OneStep extends Component<IOneStepProps, IOneStepState> {
 	}
 	private getSourceDatabase = async () => {
 		try {
-			const {status, message, data} = await request.post('/collection/info/DbSource/getAllDbsource', {}, {
+			const { status, message, data } = await request.post('/collection/info/DbSource/getAllDbsource', {}, {
 				loading: true,
 				loadingTitle: '获取源数据库表……'
 			});
@@ -209,18 +211,18 @@ class OneStep extends Component<IOneStepProps, IOneStepState> {
 		}
 	}
 	private changeCategory = (val: string[]) => {
-		let {formData, changeFormData} = this.props;
+		let { formData, changeFormData } = this.props;
 		formData.category = val;
 		changeFormData(formData);
 	}
 	private changeSourceDatabase = (val) => {
-		let {formData, changeFormData} = this.props;
+		let { formData, changeFormData } = this.props;
 		formData.sourceDatabase = val;
 		this.getSourceTableListData(formData.sourceDatabase);
 		changeFormData(formData);
 	}
 	private changeSourceTable = async (val) => {
-		let {formData, changeFormData} = this.props;
+		let { formData, changeFormData } = this.props;
 		formData.sourceTable = val;
 		await changeFormData(formData);
 		this.getTableFieldListData();
@@ -230,7 +232,7 @@ class OneStep extends Component<IOneStepProps, IOneStepState> {
 			const params = {
 				dataSourceId: id
 			}
-			const {status, message, data} = await request.post('/collection/data/database/getTables', params, {
+			const { status, message, data } = await request.post('/collection/data/database/getTables', params, {
 				loading: true,
 				loadingTitle: '获取源表数据中……'
 			});
@@ -254,12 +256,12 @@ class OneStep extends Component<IOneStepProps, IOneStepState> {
 				dataSourceId: this.props.formData.sourceDatabase,
 				tableName: this.props.formData.sourceTable
 			}
-			const {status, message, data} = await request.post('/collection/data/database/getColumns', params, {
+			const { status, message, data } = await request.post('/collection/data/database/getColumns', params, {
 				loading: true,
 				loadingTitle: '获取表字段中……'
 			});
 			if (status === 200) {
-				const {formData, changeFormData} = this.props;
+				const { formData, changeFormData } = this.props;
 				formData.fieldList = data;
 				changeFormData(formData);
 			} else if (status === 204) {
@@ -275,7 +277,7 @@ class OneStep extends Component<IOneStepProps, IOneStepState> {
 		}
 	}
 	private changeFieldName = (row, key, e: ChangeEvent<HTMLInputElement>) => {
-		let {formData, changeFormData} = this.props;
+		let { formData, changeFormData } = this.props;
 		formData.fieldList.forEach(item => {
 			if (item.nameEng === row.nameEng) {
 				item.name = e.currentTarget.value

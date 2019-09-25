@@ -2,6 +2,7 @@ import * as React from 'react';
 import style from "../IntefaceRegister/style.module.less";
 import {Tabs} from "antd";
 import Main from 'src/component/FileCollection/TableSync/Main';
+import DataSource from "../../../../component/FileCollection/TableSync/DataSource";
 
 export interface ITableSyncProps {
 }
@@ -39,7 +40,7 @@ export default class TableSync extends React.Component<ITableSyncProps, ITableSy
 			      tab={'数据源管理'}
 			    >
 						<div className={'tabs-wrap'}>
-							1232
+							<DataSource />
 						</div>
 			    </Tabs.TabPane>
 		    </Tabs>

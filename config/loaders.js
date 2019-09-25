@@ -1,6 +1,7 @@
 const paths = require('./paths');
 const tsImportPluginFactory = require('ts-import-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path=require('path');
 
 const autoprefixer = require('autoprefixer')({
   browsers: [
@@ -78,6 +79,12 @@ const tsLoader = {
   test: /\.(ts|tsx)$/,
   include: paths.appSrc,
   use: [{
+    loader: 'babel-loader',
+    query: {
+      presets: ['env', 'react'],
+      plugins: ["react-hot-loader/babel"] //增加
+    }
+  }, {
     loader: require.resolve('ts-loader'),
     options: {
       transpileOnly: true,
@@ -235,6 +242,7 @@ const lessLoaderProd = {
 
 const lessLoaderDevModule = {
   test: /\.module\.less$/,
+	include: path.resolve('src/'),
   use: [
     require.resolve('style-loader'),
     cssModuleDev,
@@ -245,6 +253,7 @@ const lessLoaderDevModule = {
 
 const lessLoaderProdModule = {
   test: /\.module\.less$/,
+	include: path.resolve('src/'),
   loader: ExtractTextPlugin.extract(
     Object.assign({
         fallback: require.resolve('style-loader'),
