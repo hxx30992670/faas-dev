@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Style from './style.module.less';
-import { Layout, Button, Spin } from 'antd';
+import { Layout, Button, Spin, message as Msg } from 'antd';
 import { RouteComponentProps, Switch, Route, Redirect } from "react-router-dom";
 import moment from "moment";
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
@@ -18,119 +18,134 @@ import { connect } from 'react-redux';
 import { StoreState } from 'src/types';
 import { Dispatch } from 'redux';
 import LocalSave from 'src/utils/LocalSave';
+import request from 'src/utils/Request';
 const { Header, Sider, Content } = Layout;
 
 const mapStateToProps = (state: StoreState) => ({
-  currentRoute: state.currentRoute,
-  loading: state.loading,
-  loadingTitle: state.loadingTitle
+	currentRoute: state.currentRoute,
+	loading: state.loading,
+	loadingTitle: state.loadingTitle
 });
 Spin.setDefaultIndicator(Layout)
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onChangeMenuSelect: (payload: string) => dispatch(changeRoute(payload))
+	onChangeMenuSelect: (payload: string) => dispatch(changeRoute(payload))
 })
 
 export interface IMainTemplateProps extends RouteComponentProps {
-  currentRoute?: string,
-  loading: boolean,
-  loadingTitle: string,
-  onChangeMenuSelect: (payload: string) => void
+	currentRoute?: string,
+	loading: boolean,
+	loadingTitle: string,
+	onChangeMenuSelect: (payload: string) => void
 }
 
 export interface IMainTemplateState {
-  userInfo: any
+	userInfo: any
 }
 
 
 
 class MainTemplate extends React.Component<IMainTemplateProps, IMainTemplateState> {
-  constructor(props: IMainTemplateProps) {
-    super(props);
-    this.state = {
-      userInfo: {
-        mt: ''
-      }
-    }
-  }
-  public shouldComponentUpdate(prevProps: IMainTemplateProps, prevState: IMainTemplateState) {
-    prevProps.onChangeMenuSelect(this.props.location.pathname);
-    return true;
-  }
+	constructor(props: IMainTemplateProps) {
+		super(props);
+		this.state = {
+			userInfo: {
+				mt: ''
+			}
+		}
+	}
+	public shouldComponentUpdate(prevProps: IMainTemplateProps, prevState: IMainTemplateState) {
+		prevProps.onChangeMenuSelect(this.props.location.pathname);
+		return true;
+	}
 
-  public componentDidMount() {
-    // const {userInfo} = this.state;
-    const userSession = LocalSave.getSession('userInfo', true);
-    this.setState({
-      userInfo: userSession
-    })
-  }
+	public componentDidMount() {
+		// const {userInfo} = this.state;
+		const userSession = LocalSave.getSession('userInfo', true);
+		this.setState({
+			userInfo: userSession
+		})
+	}
 
-  public render() {
-    const { match } = this.props;
-    return (
-	    <Layout className={Style.container}>
-		    <Header className={Style.customHeader}>
-			    <div className={Style.headerWrap}>
-				    <h3 className={Style.title}>
-					    中云FAAS平台
+	public render() {
+		const { match } = this.props;
+		return (
+			<Layout className={Style.container}>
+				<Header className={Style.customHeader}>
+					<div className={Style.headerWrap}>
+						<h3 className={Style.title}>
+							中云FAAS平台
 				    </h3>
-				    <div className={Style.loginInfo}>
-					    <p className={Style.time}>{moment().format('YYYY-MM-DD dddd')}</p>
-					    <p className={Style.currentLogin}>
-						    <span>管理员：</span>
-						    <span>{this.state.userInfo.account}</span>
-					    </p>
-					    <Button type='link' className={Style.logoutLink} onClick={this.outLogin}>注销</Button>
-				    </div>
-			    </div>
-		    </Header>
-		    <Layout>
-			    <Sider width={'auto'}>
-				    <MainMenu role={1} />
-			    </Sider>
-			    <Content>
-				    <TransitionGroup
-					    className='App'
-				    >
-					    <CSSTransition
-						    key={this.props.location.pathname}
-						    classNames='transform'
-						    timeout={500}
+						<div className={Style.loginInfo}>
+							<p className={Style.time}>{moment().format('YYYY-MM-DD dddd')}</p>
+							<p className={Style.currentLogin}>
+								<span>管理员：</span>
+								<span>{this.state.userInfo.account}</span>
+							</p>
+							<Button type='link' className={Style.logoutLink} onClick={this.outLogin}>注销</Button>
+						</div>
+					</div>
+				</Header>
+				<Layout>
+					<Sider width={'auto'}>
+						<MainMenu role={1} />
+					</Sider>
+					<Content>
+						<TransitionGroup
+							className='App'
+						>
+							<CSSTransition
+								key={this.props.location.pathname}
+								classNames='transform'
+								timeout={500}
 
-					    >
-						    <Switch location={this.props.location}>
-							    <Redirect exact={true} path={`${match.path}`} to={`${match.path}/file-collection`} />
-							    <Route path={`${match.path}/file-collection`} component={FileCollection} />
-							    <Route path={`${match.path}/interface-register`} component={InterfaceRegister} />
-							    <Route path={`${match.path}/table-sync`} component={TableSync} />
-							    <Route path={`${match.path}/business-synergy`} component={BusinessSynergy} />
-							    <Route path={`${match.path}/data-list`} component={DataList} />
-							    <Route path={`${match.path}/category-manager`} component={CategoryManager} />
-							    <Route path={`${match.path}/government-list`} component={GovernmentList} />
-							    <Route path={`${match.path}/data-trace`} component={DataTrace} />
-						    </Switch>
-					    </CSSTransition>
-				    </TransitionGroup>
+							>
+								<Switch location={this.props.location}>
+									<Redirect exact={true} path={`${match.path}`} to={`${match.path}/file-collection`} />
+									<Route path={`${match.path}/file-collection`} component={FileCollection} />
+									<Route path={`${match.path}/interface-register`} component={InterfaceRegister} />
+									<Route path={`${match.path}/table-sync`} component={TableSync} />
+									<Route path={`${match.path}/business-synergy`} component={BusinessSynergy} />
+									<Route path={`${match.path}/data-list`} component={DataList} />
+									<Route path={`${match.path}/category-manager`} component={CategoryManager} />
+									<Route path={`${match.path}/government-list`} component={GovernmentList} />
+									<Route path={`${match.path}/data-trace`} component={DataTrace} />
+								</Switch>
+							</CSSTransition>
+						</TransitionGroup>
 
-			    </Content>
-		    </Layout>
-		    {
-			    this.props.loading ?
-				    <Spin spinning={this.props.loading} tip={this.props.loadingTitle} wrapperClassName='loading-wrap' className={'test-wrap'} /> :
-				    ""
-		    }
-	    </Layout>
+					</Content>
+				</Layout>
+				{
+					this.props.loading ?
+						<Spin spinning={this.props.loading} tip={this.props.loadingTitle} wrapperClassName='loading-wrap' className={'test-wrap'} /> :
+						""
+				}
+			</Layout>
 
-    );
-  }
-  public outLogin = () => {
-    window.sessionStorage.clear();
-    this.props.history.push('/login');
-  }
-  public showBox = () => {
+		);
+	}
+	public outLogin = async () => {
+		try {
+			const params = {
+				mt: this.state.userInfo.mt
+			}
+			const { status, message } = await request.post('/usergroup/logout/userLogout', params, {
+				loading: true,
+				loadingTitle: '注销中……'
+			});
+			if (status === 200) {
+				this.props.history.push('/login');
+			} else {
+				Msg.warn(message)
+			}
+		} catch (error) {
+			Msg.error('内部错误')
+		}
+	}
+	public showBox = () => {
 
-  }
+	}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainTemplate);

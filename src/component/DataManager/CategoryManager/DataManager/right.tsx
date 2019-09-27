@@ -3,6 +3,7 @@ import style from './style.module.less';
 import { Tabs } from "antd";
 import CategoryCreate from "./CategoryCreate";
 import CategoryPublish from './CategoryPublish';
+import PublishRecord from './PublishRecord';
 
 export interface IRightProps {
 	leftComponent: any
@@ -35,7 +36,7 @@ class Right extends React.Component<IRightProps, IRightState> {
 						</div>
 					</Tabs.TabPane>
 					<Tabs.TabPane tab={'发布记录'} key={'3'}>
-						1
+						<PublishRecord />
 					</Tabs.TabPane>
 				</Tabs>
 			</div>

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import style from './style.module.less';
-import {Tabs} from 'antd';
+import { Tabs } from 'antd';
 import DataCategory from "../../../../component/DataManager/CategoryManager/DataManager";
+import ServiceCategory from 'src/component/DataManager/CategoryManager/ServiceManager';
 
 export interface ICategoryManagerProps {
 }
@@ -18,22 +19,22 @@ export default class CategoryManager extends React.Component<ICategoryManagerPro
 	}
 
 	public render() {
-    return (
-      <div className={style.container}>
-        <Tabs type='card' activeKey={this.state.activeKey} onChange={this.changeTabs}>
+		return (
+			<div className={style.container}>
+				<Tabs type='card' activeKey={this.state.activeKey} onChange={this.changeTabs}>
 					<Tabs.TabPane key={'1'} tab={'数据目录'}>
 						<DataCategory />
 					</Tabs.TabPane>
-	        <Tabs.TabPane key={'2'} tab={'服务目录'}>
-		        34343243
-	        </Tabs.TabPane>
-        </Tabs>
-      </div>
-    );
-  }
-  private changeTabs = (val) => {
+					<Tabs.TabPane key={'2'} tab={'服务目录'}>
+						<ServiceCategory />
+					</Tabs.TabPane>
+				</Tabs>
+			</div>
+		);
+	}
+	private changeTabs = (val: string) => {
 		this.setState({
 			activeKey: val
 		})
-  }
+	}
 }

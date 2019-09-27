@@ -35,7 +35,6 @@ moment.locale('zh-cn', {
 class App extends React.Component<RouteComponentProps, any> {
 	public renderMainPage = (props: RouteComponentProps) => {
 		if (props.location.pathname === '/login') {
-			console.log(1);
 			return <Login {...props} />
 		} else {
 			return (
