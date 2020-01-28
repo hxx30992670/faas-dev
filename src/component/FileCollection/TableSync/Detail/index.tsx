@@ -1,7 +1,7 @@
 import * as React from 'react';
-import style from "./style.module.less";
+import style from './style.module.less';
 import { Form, Input, message as Message } from 'antd';
-import request from "src/utils/Request";
+import request from 'src/utils/Request';
 
 export interface ITableSyncDetailProps {
   id: string | number
@@ -126,7 +126,7 @@ export default class TableSyncDetail extends React.Component<ITableSyncDetailPro
         if (detailData.saveType === 2 && detailData.timestampColumn !== '') {
           const timestampColumnArr: any[] = data.directoryMetaEntityList.filter(item => {
             let type: string = item.type.toString();
-            return type.startsWith("4");
+            return type.startsWith('4');
           });
           const currentTimeStampColumn = timestampColumnArr.find(item => item.nameEng === data.dbSyncAndSourceEntity.timestampColumn);
           detailData.timestampColumn = currentTimeStampColumn.name;

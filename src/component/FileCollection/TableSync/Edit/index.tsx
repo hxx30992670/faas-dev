@@ -3,7 +3,7 @@ import style from './style.module.less';
 import {Button, Form, Input, message as Message, Radio, Select, TimePicker} from 'antd';
 import {FormComponentProps} from 'antd/lib/form';
 import request from 'src/utils/Request';
-import moment from "moment";
+import moment from 'moment';
 export interface ITableSyncEditProps extends FormComponentProps {
 	id: string| number;
 	closeModal: (callBack?:any) => void;
@@ -312,7 +312,7 @@ class TableSyncEdit extends Component<ITableSyncEditProps, ITableSyncEditState> 
 							rules: [
 								{required: true, message: '具体时间不能为空'}
 							],
-							initialValue: formData.specificTime? moment(formData.specificTime, "HH:mm:ss"): null
+							initialValue: formData.specificTime? moment(formData.specificTime, 'HH:mm:ss'): null
 						})(
 							<TimePicker  onChange={this.setDate} placeholder={'请选择时间'} className={style.customSelect} />
 						)
@@ -348,7 +348,7 @@ class TableSyncEdit extends Component<ITableSyncEditProps, ITableSyncEditState> 
 								rules: [
 									{required: true, message: '具体时间不能为空'}
 								],
-								initialValue: formData.specificTime? moment(formData.specificTime, "HH:mm:ss"): null
+								initialValue: formData.specificTime? moment(formData.specificTime, 'HH:mm:ss'): null
 							})(
 								<TimePicker  onChange={this.setDate} placeholder={'请选择时间'} className={style.customSelect} />
 							)
@@ -383,7 +383,7 @@ class TableSyncEdit extends Component<ITableSyncEditProps, ITableSyncEditState> 
 								rules: [
 									{required: true, message: '具体时间不能为空'}
 								],
-								initialValue: formData.specificTime? moment(formData.specificTime, "HH:mm:ss"): null
+								initialValue: formData.specificTime? moment(formData.specificTime, 'HH:mm:ss'): null
 							})(
 								<TimePicker  onChange={this.setDate} placeholder={'请选择时间'} className={style.customSelect} />
 							)
@@ -436,7 +436,7 @@ class TableSyncEdit extends Component<ITableSyncEditProps, ITableSyncEditState> 
 								rules: [
 									{required: true, message: '具体时间不能为空'}
 								],
-								initialValue: formData.specificTime? moment(formData.specificTime, "HH:mm:ss"): null
+								initialValue: formData.specificTime? moment(formData.specificTime, 'HH:mm:ss'): null
 							})(
 								<TimePicker  onChange={this.setDate} placeholder={'请选择时间'} className={style.customSelect} />
 							)

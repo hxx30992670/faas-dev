@@ -1,7 +1,7 @@
 import React, { ChangeEvent, Component } from 'react';
-import { Form, Cascader, message as Message, Select, Table, Input } from "antd";
+import { Form, Cascader, message as Message, Select, Table, Input } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
-import request from "src/utils/Request";
+import request from 'src/utils/Request';
 import { IFormData } from './index';
 import style from './style.module.less'
 
@@ -176,7 +176,7 @@ class OneStep extends Component<IOneStepProps, IOneStepState> {
 
 	private getCategoryList = async () => {
 		try {
-			const { data, message, status } = await request.post("/collection/info/DirectoryRoot/listRootAndSupDirectory", {}, {
+			const { data, message, status } = await request.post('/collection/info/DirectoryRoot/listRootAndSupDirectory', {}, {
 				loading: true,
 				loadingTitle: '获取目录数据中……'
 			});

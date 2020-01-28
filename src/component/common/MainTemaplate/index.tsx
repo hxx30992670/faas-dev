@@ -1,11 +1,11 @@
 import * as React from 'react';
 import Style from './style.module.less';
 import { Layout, Button, Spin, message as Msg } from 'antd';
-import { RouteComponentProps, Switch, Route, Redirect } from "react-router-dom";
-import moment from "moment";
+import { RouteComponentProps, Switch, Route, Redirect } from 'react-router-dom';
+import moment from 'moment';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import MainMenu from "../MainMenu/index";
-import FileCollection from "src/views/DataManager/DataCollection/FileCollection/index";
+import MainMenu from '../MainMenu/index';
+import FileCollection from 'src/views/DataManager/DataCollection/FileCollection/index';
 import InterfaceRegister from 'src/views/DataManager/DataCollection/IntefaceRegister/index';
 import TableSync from 'src/views/DataManager/DataCollection/TableSync/index';
 import DataList from 'src/views/DataManager/DataManager/DataList';
@@ -13,7 +13,7 @@ import CategoryManager from 'src/views/DataManager/DataManager/CategoryManager';
 import GovernmentList from 'src/views/DataManager/DataGovernment/GovernmentList';
 import DataTrace from 'src/views/DataManager/DataGovernment/DataTrace';
 import BusinessSynergy from 'src/views/DataManager/BusinessSynergy'
-import { changeRoute } from "src/actions";
+import { changeRoute } from 'src/actions';
 import { connect } from 'react-redux';
 import { StoreState } from 'src/types';
 import { Dispatch } from 'redux';
@@ -119,7 +119,7 @@ class MainTemplate extends React.Component<IMainTemplateProps, IMainTemplateStat
 				{
 					this.props.loading ?
 						<Spin spinning={this.props.loading} tip={this.props.loadingTitle} wrapperClassName='loading-wrap' className={'test-wrap'} /> :
-						""
+						''
 				}
 			</Layout>
 

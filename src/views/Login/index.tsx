@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps } from 'react-router-dom';
 import LoginForm from 'src/component/Login/LoginForm/index';
 import style from './style.module.less';
 

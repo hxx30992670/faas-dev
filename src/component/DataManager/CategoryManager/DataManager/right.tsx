@@ -1,7 +1,7 @@
 import * as React from 'react';
 import style from './style.module.less';
-import { Tabs } from "antd";
-import CategoryCreate from "./CategoryCreate";
+import { Tabs } from 'antd';
+import CategoryCreate from './CategoryCreate';
 import CategoryPublish from './CategoryPublish';
 import PublishRecord from './PublishRecord';
 

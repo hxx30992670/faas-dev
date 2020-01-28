@@ -1,7 +1,7 @@
 import React, {ChangeEvent, Component, Fragment} from 'react';
-import {TimePicker, Form, Select, Radio, Input} from "antd";
+import {TimePicker, Form, Select, Radio, Input} from 'antd';
 import {FormComponentProps} from 'antd/lib/form';
-import {IFormData} from "./index";
+import {IFormData} from './index';
 import moment from 'moment';
 
 export interface ITwoStepProps extends FormComponentProps{
@@ -155,7 +155,7 @@ class TwoStep extends Component<ITwoStepProps, ITwoStepState> {
 							rules: [
 								{required: true, message: '具体时间不能为空'}
 							],
-							initialValue: formData.specificTime? moment(formData.specificTime, "HH:mm:ss"): null
+							initialValue: formData.specificTime? moment(formData.specificTime, 'HH:mm:ss'): null
 						})(
 							<TimePicker  onChange={this.setDate} placeholder={'请选择时间'} />
 						)
@@ -191,7 +191,7 @@ class TwoStep extends Component<ITwoStepProps, ITwoStepState> {
 								rules: [
 									{required: true, message: '具体时间不能为空'}
 								],
-								initialValue: formData.specificTime? moment(formData.specificTime, "HH:mm:ss"): null
+								initialValue: formData.specificTime? moment(formData.specificTime, 'HH:mm:ss'): null
 							})(
 								<TimePicker  onChange={this.setDate} placeholder={'请选择时间'} />
 							)
@@ -226,7 +226,7 @@ class TwoStep extends Component<ITwoStepProps, ITwoStepState> {
 								rules: [
 									{required: true, message: '具体时间不能为空'}
 								],
-								initialValue: formData.specificTime? moment(formData.specificTime, "HH:mm:ss"): null
+								initialValue: formData.specificTime? moment(formData.specificTime, 'HH:mm:ss'): null
 							})(
 								<TimePicker  onChange={this.setDate} placeholder={'请选择时间'} />
 							)
@@ -279,7 +279,7 @@ class TwoStep extends Component<ITwoStepProps, ITwoStepState> {
 								rules: [
 									{required: true, message: '具体时间不能为空'}
 								],
-								initialValue: formData.specificTime? moment(formData.specificTime, "HH:mm:ss"): null
+								initialValue: formData.specificTime? moment(formData.specificTime, 'HH:mm:ss'): null
 							})(
 								<TimePicker  onChange={this.setDate} placeholder={'请选择时间'} />
 							)

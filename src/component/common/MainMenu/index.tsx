@@ -1,8 +1,8 @@
 import * as React from 'react';
-import style from "./style.module.less";
+import style from './style.module.less';
 import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
 import { Menu, Icon } from 'antd';
-import { changeRoute } from "src/actions";
+import { changeRoute } from 'src/actions';
 import { connect } from 'react-redux';
 import { StoreState } from 'src/types';
 import { Dispatch } from 'redux';
@@ -62,10 +62,10 @@ class MainMenu extends React.Component<IMainMenuProps, IMainMenuState> {
               path: '/data-manager/table-sync',
               name: '库表同步'
             },
-	          {
-	          	path: '/data-manager/business-synergy',
-		          name: '业务协同'
-	          }
+            {
+              path: '/data-manager/business-synergy',
+              name: '业务协同'
+            }
           ]
         },
         {

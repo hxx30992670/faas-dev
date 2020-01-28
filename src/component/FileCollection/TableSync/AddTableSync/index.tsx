@@ -2,8 +2,8 @@ import * as React from 'react';
 import {Steps, Icon, Form, Button, message as Message} from 'antd';
 import {FormComponentProps} from 'antd/lib/form';
 import OneStep from './OneStep';
-import TwoStep from "./TwoStep";
-import ThreeStep from "./ThreeStep";
+import TwoStep from './TwoStep';
+import ThreeStep from './ThreeStep';
 import request from 'src/utils/Request';
 import style from './style.module.less';
 
@@ -89,16 +89,16 @@ class AddTableSync extends React.Component<IAddTableSyncProps, IAddTableSyncStat
           /*onChange={this.changeStep}*/
 	        status={this.state.stepStatus}
         >
-          <Steps.Step icon={<Icon type="setting"
+          <Steps.Step icon={<Icon type='setting'
             className={'bigSize'}
             style={{position: 'relative', top: -6}} />}
-            title="1、配置数据库" />
-          <Steps.Step icon={<Icon type="setting"
+            title='1、配置数据库' />
+          <Steps.Step icon={<Icon type='setting'
             style={{position: 'relative', top: -6}} />}
-            title="2、配置同步策略" />
-          <Steps.Step icon={<Icon type="setting"
+            title='2、配置同步策略' />
+          <Steps.Step icon={<Icon type='setting'
             style={{position: 'relative', top: -6}} />}
-            title="3、配置数据信息" />
+            title='3、配置数据信息' />
         </Steps>
         <div className={style.formWrap}>
           <Form {...formItemLayout}>

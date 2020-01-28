@@ -1,0 +1,12 @@
+.container .title {
+  font-size: 16px;
+}
+.container .select-wrap {
+  padding-top: 15px;
+}
+.container .select-wrap .custom-select {
+  width: 200px;
+}
+.container .button-wrap {
+  padding-top: 15px;
+}

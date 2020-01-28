@@ -27,6 +27,7 @@
     "comment-format": false,
     "jsx-no-lambda": false,
     "prefer-for-of": false,
-    "variable-name": false
+    "variable-name": false,
+    "quotemark": [true, "single", "avoid-escape"]
   }
 }

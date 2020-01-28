@@ -42,9 +42,9 @@ class Search extends React.Component<ISearchProps, ISearchState> {
             <Select placeholder='请选择数据类型' style={{ width: '100%' }} value={this.props.searchValue.dataType} onChange={this.changeDataType}
               allowClear={true}
             >
-              <Select.Option value="1">文件</Select.Option>
-              <Select.Option value="2">接口</Select.Option>
-              <Select.Option value="3">库表</Select.Option>
+              <Select.Option value='1'>文件</Select.Option>
+              <Select.Option value='2'>接口</Select.Option>
+              <Select.Option value='3'>库表</Select.Option>
             </Select>
           </div>
           <div className={style.input}>
@@ -69,10 +69,10 @@ class Search extends React.Component<ISearchProps, ISearchState> {
           </div>
         </div>
         <div>
-          <Button type="danger" style={{ marginRight: 10 }} title='删除' onClick={this.deleteDataList}>
+          <Button type='danger' style={{ marginRight: 10 }} title='删除' onClick={this.deleteDataList}>
             <Icon type='delete' />
           </Button>
-          <Button type="default" title='刷新' onClick={this.resetSearch}>
+          <Button type='default' title='刷新' onClick={this.resetSearch}>
             <Icon type='undo' />
           </Button>
         </div>
@@ -134,7 +134,7 @@ class Search extends React.Component<ISearchProps, ISearchState> {
       dateRang: val
     }, () => {
       const dateRang = val.map(item => {
-        return moment(item).format("YYYY-MM-DD");
+        return moment(item).format('YYYY-MM-DD');
       });
       this.props.changeSearchValue('dateRang', dateRang);
     })

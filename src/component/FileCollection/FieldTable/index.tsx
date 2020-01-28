@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Table } from 'antd';
-import { FormComponentProps } from "antd/lib/form";
+import { FormComponentProps } from 'antd/lib/form';
 import { EditableCell, EditableFormRow } from './table';
-import style from "./style.module.less";
+import style from './style.module.less';
 
 interface IFieldTableProps extends FormComponentProps {
   fieldList: any[],

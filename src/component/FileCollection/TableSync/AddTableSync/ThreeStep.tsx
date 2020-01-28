@@ -1,7 +1,7 @@
 import React, {ChangeEvent, Component} from 'react';
-import {Form, Input} from "antd";
+import {Form, Input} from 'antd';
 import {FormComponentProps} from 'antd/lib/form';
-import {IFormData} from "./index";
+import {IFormData} from './index';
 
 export interface IThreeStepProps extends FormComponentProps {
 	formData: IFormData,

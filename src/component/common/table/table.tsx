@@ -64,7 +64,7 @@ class EditableCell extends React.Component<any, any>{
       <Form.Item style={{ margin: 0 }}>
         {
           form.getFieldDecorator(dataIndex + record.id, {
-            validateTrigger: inputtype === 'select' ? ["onChange"] : ["onBlur"],
+            validateTrigger: inputtype === 'select' ? ['onChange'] : ['onBlur'],
             rules,
             initialValue: record[dataIndex]
           })(

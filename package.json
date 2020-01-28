@@ -3,12 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/code-frame": "^7.5.5",
+    "@babel/core": "^7.6.3",
+    "@babel/plugin-proposal-decorators": "^7.6.0",
+    "@types/jquery": "^3.3.31",
+    "@types/jqueryui": "^1.12.9",
     "@types/react-redux": "^7.1.2",
     "antd": "^3.21.4",
     "autoprefixer": "7.1.6",
     "axios": "^0.19.0",
     "babel-jest": "^22.1.0",
     "babel-loader": "^7.1.2",
+    "babel-plugin-dynamic-import-node": "^2.3.0",
     "babel-plugin-import": "^1.7.0",
     "babel-preset-react-app": "^3.1.1",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
@@ -22,6 +28,8 @@
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
     "jest": "22.4.2",
+    "jquery": "^3.4.1",
+    "jquery-ui": "^1.12.1",
     "jsencrypt": "^3.0.0-rc.1",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
@@ -125,7 +133,14 @@
   "babel": {
     "presets": [
       "react-app"
-    ]
+    ],
+    "env": {
+      "development": {
+        "plugins": [
+          "dynamic-import-node"
+        ]
+      }
+    }
   },
   "proxy": {
     "/api": {

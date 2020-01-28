@@ -3,7 +3,7 @@ import {ChangeEvent} from 'react'
 import {Button, Form, Input, Select, Table, Icon} from 'antd';
 import {FormComponentProps} from 'antd/lib/form';
 import {ColumnProps} from 'antd/lib/table';
-import style from "./style.module.less";
+import style from './style.module.less';
 
 interface IFieldListProps extends FormComponentProps {
 	fieldList: IField[],
@@ -138,7 +138,7 @@ class FieldList extends React.Component<IFieldListProps, IFieldListState> {
 								<Icon type={'file-add'} className={'bigSize'} />
 							</Button>
 							<Button type={'link'} title={'删除'} onClick={this.props.removeFieldRow.bind(this,row)}>
-								<Icon type="delete" className={'bigSize'} style={{color: 'red'}} />
+								<Icon type='delete' className={'bigSize'} style={{color: 'red'}} />
 							</Button>
 						</div>
 					)

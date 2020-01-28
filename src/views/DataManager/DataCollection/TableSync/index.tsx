@@ -1,8 +1,8 @@
 import * as React from 'react';
-import style from "../IntefaceRegister/style.module.less";
-import {Tabs} from "antd";
+import style from '../IntefaceRegister/style.module.less';
+import {Tabs} from 'antd';
 import Main from 'src/component/FileCollection/TableSync/Main';
-import DataSource from "../../../../component/FileCollection/TableSync/DataSource";
+import DataSource from '../../../../component/FileCollection/TableSync/DataSource';
 
 export interface ITableSyncProps {
 }

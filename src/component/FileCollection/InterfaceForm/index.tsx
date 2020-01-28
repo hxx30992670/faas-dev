@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {Form, Cascader, message as Message, Icon, Input, Select, Button} from "antd";
+import {Form, Cascader, message as Message, Icon, Input, Select, Button} from 'antd';
 import {FormComponentProps} from 'antd/lib/form';
-import {RouteComponentProps} from "react-router-dom";
+import {RouteComponentProps} from 'react-router-dom';
 import request from 'src/utils/Request';
 import RequestParams from 'src/component/FileCollection/RequestParams';
 import ResponseParams from 'src/component/FileCollection/ResponseParams';
@@ -104,7 +104,7 @@ class InterfaceForm extends React.Component<IInterfaceFormProps, IInterfaceFormS
 						<p className={'tips'}>
 							*无关联目录，请先
 							<span>创建目录！</span>
-							<Icon type="info-circle" style={{color: 'rgb(47,145,216)', marginLeft: 15}}/>
+							<Icon type='info-circle' style={{color: 'rgb(47,145,216)', marginLeft: 15}}/>
 						</p>
 					</div>
 				</Form.Item>

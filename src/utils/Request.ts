@@ -1,7 +1,7 @@
 import axios from 'axios';
-import LocalSave from "./LocalSave";
+import LocalSave from './LocalSave';
 import { message } from 'antd';
-import Store from "../store/index";
+import Store from '../store/index';
 import { CHANGELOADING, CHANGELOADINGTITLE } from '../constants/index';
 
 
@@ -67,8 +67,8 @@ export default class Request {
         data,
         method: 'post',
         headers: {
-          "Content-Type": file ? "multipart/form-data" : "application/json;charset=utf-8",
-          "role": 1
+          'Content-Type': file ? 'multipart/form-data' : 'application/json;charset=utf-8',
+          'role': 1
         },
         loading: options.loading ? options.loading : false,
         loadingTitle: options.loadingTitle

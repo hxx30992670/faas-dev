@@ -59,14 +59,14 @@ class TableHistory extends Component<ITableHistoryProps, ITableHistoryState> {
 				title: '开始时间',
 				dataIndex: 'startTime',
 				render: value => (
-					<span>{ value ? moment(value).format("YYYY-MM-DD HH:mm:ss") : ''}</span>
+					<span>{ value ? moment(value).format('YYYY-MM-DD HH:mm:ss') : ''}</span>
 				)
 			},
 			{
 				title: '结束时间',
 				dataIndex: 'stopTime',
 				render: value => (
-					<span>{value ? moment(value).format("YYYY-MM-DD HH:mm:ss") : ''}</span>
+					<span>{value ? moment(value).format('YYYY-MM-DD HH:mm:ss') : ''}</span>
 				)
 			},
 			{

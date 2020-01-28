@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import style from './style.module.less';
 import Search from './Search';
-import DataList from "./DataList";
-import {message as Message,} from "antd";
+import DataList from './DataList';
+import {message as Message,} from 'antd';
 import request from 'src/utils/Request';
 
 export interface ITableSyncMainProps {

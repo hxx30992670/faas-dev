@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Button, Pagination, Table, message as Msg} from "antd";
+import {Button, Pagination, Table, message as Msg} from 'antd';
 import {ColumnProps} from 'antd/lib/table';
 import style from './main.module.less';
 import {IPageValue} from './index';
@@ -83,7 +83,7 @@ class TableList extends React.Component<ITableProps, ITableState> {
 			<div className={style.tableWrap}>
 				<Table<ITableColumn> columns={columns} dataSource={this.props.tableData}
 					bordered={true}
-					rowKey="id"
+					rowKey='id'
 					rowSelection={rowSelection}
 					pagination={false}
 					className={'custom-table'}

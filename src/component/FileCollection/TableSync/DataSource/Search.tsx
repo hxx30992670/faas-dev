@@ -1,9 +1,9 @@
 import * as React from 'react';
 import style from './main.module.less';
-import {Input, Icon, Button, Modal, message as Msg} from "antd";
-import {ChangeEvent} from "react";
+import {Input, Icon, Button, Modal, message as Msg} from 'antd';
+import {ChangeEvent} from 'react';
 import request from 'src/utils/Request';
-import NewDataSource from "./NewDataSource";
+import NewDataSource from './NewDataSource';
 
 export interface ISearchProps {
 	searchName: any;
