@@ -1,13 +1,13 @@
 import * as React from 'react';
 import style from './style.module.less';
-import {Form, Cascader, Input, message as Message, Button} from "antd";
-import {RouteComponentProps} from "react-router-dom";
+import {Form, Cascader, Input, message as Message, Button} from 'antd';
+import {RouteComponentProps} from 'react-router-dom';
 
 const {Item} = Form;
 import {FormComponentProps} from 'antd/lib/form';
 import {IField} from './FieldList';
 import FieldList from './FieldList';
-import request from "../../../../utils/Request";
+import request from '../../../../utils/Request';
 
 export interface IFormDataProps extends FormComponentProps {
 
@@ -156,7 +156,7 @@ class FormData extends React.Component<IFormDataProps, IFormDataState> {
 
 	private getCatalogList = async () => {
 		try {
-			const { data, message, status } = await request.post("/collection/info/DirectoryRoot/listRootAndSupDirectory", {}, {
+			const { data, message, status } = await request.post('/collection/info/DirectoryRoot/listRootAndSupDirectory', {}, {
 				loading: true,
 				loadingTitle: '获取目录数据中……'
 			});

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { createRef } from 'react';
 import style from './style.module.less';
-import LeftMain from "./left";
-import RightMain from "./right";
+import LeftMain from './left';
+import RightMain from './right';
 export interface IDataCategoryProps {
 
 }

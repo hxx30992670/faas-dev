@@ -1,0 +1,93 @@
+.search-wrap {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .left {
+    display: flex;
+    align-items: center;
+  }
+
+  .right {
+    display: flex;
+    align-items: center;
+
+    button {
+      margin-left: 10px;
+    }
+  }
+}
+
+.table-wrap {
+  padding: 10px;
+
+  .page-box {
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.governmnet-wrap {
+  padding: 10px;
+  display: flex;
+  .left {
+    width: auto;
+    height: 100%;
+    .template-wrap {
+      padding: 20px 0;
+      background-color: #e5efff;
+      .title {
+        height: 40px;
+        line-height: 40px;
+        background: #4887ed;
+        text-align: center;
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      .item {
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 30px;
+        margin: 20px;
+        background: #fff;
+        cursor: move;
+      }
+    }
+  }
+  .right {
+    flex: 1;
+    margin-left: 15px;
+    height: 100%;
+    .title {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 15px;
+      background-color: #edf1f2;
+      align-items: center;
+    }
+    .flow-wrap {
+      min-height: 550px;
+      border: 1px solid #e5efff;
+      position: relative;
+      padding-bottom: 30px;
+      box-sizing: content-box;
+      background: linear-gradient(to bottom, transparent 9px, #e5efff 11px), 
+      linear-gradient(to right, transparent 9px, #e5efff 11px);
+      background-size: 11px 11px;
+      border-right: none;
+      .flow-item {
+        width: 200px;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 20px;
+        text-align: center;
+        color: #666;
+        border: 1px solid #999;
+      }
+    }
+  }
+}

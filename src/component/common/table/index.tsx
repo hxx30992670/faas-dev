@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Button, Table, Icon, message as Message } from 'antd';
-import { FormComponentProps } from "antd/lib/form";
+import { FormComponentProps } from 'antd/lib/form';
 import { EditableCell, EditableFormRow } from './table';
-import style from "./style.module.less";
+import style from './style.module.less';
 
 interface IRequestParamsProps extends FormComponentProps {
 
@@ -87,7 +87,7 @@ class RequestParams extends React.Component<IRequestParamsProps, any> {
         render: (text, row) => (
           <div>
             <Button type='link' title={'新增'} onClick={this.addRow}>
-              <Icon type="plus" />
+              <Icon type='plus' />
             </Button>
             <Button type='link' title={'删除'} style={{ color: 'red' }} onClick={this.removeRow.bind(this, row)}>
               <Icon type={'delete'} />

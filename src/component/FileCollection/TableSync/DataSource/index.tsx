@@ -1,8 +1,8 @@
 import * as React from 'react';
 import style from './main.module.less';
-import {message as Msg} from "antd";
+import {message as Msg} from 'antd';
 import Search from './Search';
-import TableList from "./Table";
+import TableList from './Table';
 import request from 'src/utils/Request';
 
 export interface IDataSourceProps {

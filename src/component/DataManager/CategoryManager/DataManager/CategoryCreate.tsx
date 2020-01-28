@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Form, Modal } from "antd";
+import { Button, Form, Modal } from 'antd';
 import style from './categoryCreate.module.less';
 import { FormComponentProps } from 'antd/lib/form';
 import NewCategory from './EditAndNew';
@@ -71,7 +71,7 @@ class CategoryCreate extends React.Component<ICategoryCreateProps, ICategoryCrea
 		);
 	}
 	private downloadTemplate = () => {
-		window.open("/api/collection/info/DirectoryRoot/downloadModelFile");
+		window.open('/api/collection/info/DirectoryRoot/downloadModelFile');
 	}
 	private openImportCategory = () => {
 		this.setState({

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Form, Input, Select, message as Msg, Button, Icon} from "antd";
+import {Form, Input, Select, message as Msg, Button, Icon} from 'antd';
 import {FormComponentProps} from 'antd/lib/form';
 import request from 'src/utils/Request';
 import style from './main.module.less';
@@ -164,12 +164,12 @@ class NewDataSource extends React.Component<INewDataSourceProps, INewDataSourceS
 								{
 									this.state.saveBon === 2 ?
 										<p className={'validate-icon'}>
-											<Icon type="check-circle" theme="filled"  style={{color: 'green'}}/>
+											<Icon type='check-circle' theme='filled'  style={{color: 'green'}}/>
 											<span>成功</span>
 										</p>:
 										this.state.saveBon === 1 ?
 										<p className={'validate-icon'}>
-											<Icon type="close-circle"  style={{color: '#f4ab37'}} theme="filled" />
+											<Icon type='close-circle'  style={{color: '#f4ab37'}} theme='filled' />
 											<span>失败</span>
 										</p> : ''
 								}
@@ -200,7 +200,7 @@ class NewDataSource extends React.Component<INewDataSourceProps, INewDataSourceS
 	private getDbTypeList = async () => {
 		try {
 			const {status, message, data} = await request.post('/collection/info/DbSource/selectDatabaseVersion', {
-				databaseType: ""
+				databaseType: ''
 			}, {
 				loading: true,
 				loadingTitle: '获取数据库版本中……'

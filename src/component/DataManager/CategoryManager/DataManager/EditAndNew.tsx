@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Form, Input, message as Message } from "antd";
+import { Button, Form, Input, message as Message } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import style from './editAndNew.module.less';
 import request from 'src/utils/Request';
@@ -34,7 +34,7 @@ class EditAndNew extends React.Component<IEditAndNewProps, IEditAndNewState> {
 					<Form.Item label={'目录名称'}>
 						{
 							getFieldDecorator('name', {
-								validateTrigger: ["onBlur"],
+								validateTrigger: ['onBlur'],
 								rules: [
 									{ required: true, message: '目录名称不能为空' },
 									{ max: 50, message: '目录名称长度不能超过50' },

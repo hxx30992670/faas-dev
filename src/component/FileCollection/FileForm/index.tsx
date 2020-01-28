@@ -2,13 +2,13 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { Form, Cascader, message as Message, Button, Upload, Icon, Input, Modal } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
-import { UploadChangeParam } from "antd/lib/upload";
+import { UploadChangeParam } from 'antd/lib/upload';
 import style from './style.module.less';
-import request from "src/utils/Request";
-import localSave from "src/utils/LocalSave";
+import request from 'src/utils/Request';
+import localSave from 'src/utils/LocalSave';
 import FieldTable from '../FieldTable/index';
-import { portForm } from "../FieldTable/table";
-import PrviewData from "../DataPrview/index";
+import { portForm } from '../FieldTable/table';
+import PrviewData from '../DataPrview/index';
 const { confirm } = Modal;
 
 export interface IFileFormProps extends RouteComponentProps {
@@ -102,7 +102,7 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
               <p className={'tips'}>
                 *无关联目录，请先
 				        <span>创建目录！</span>
-                <Icon type="info-circle" style={{ color: 'rgb(47,145,216)', marginLeft: 15 }} />
+                <Icon type='info-circle' style={{ color: 'rgb(47,145,216)', marginLeft: 15 }} />
               </p>
             </div>
           </Form.Item>
@@ -115,7 +115,7 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
               >
                 <div className={style.uploadWrap}>
                   <Button type='primary'>
-                    <Icon type="upload" /> 选择文件
+                    <Icon type='upload' /> 选择文件
                   </Button>
                   <p className={style.tips}>*只能上传CSV和Excel(xls.xlsx)文件,大小不可超过20M</p>
                 </div>
@@ -131,8 +131,8 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
           </Form.Item>
           <Form.Item label='数据名称'>
             {
-              getFieldDecorator("dataName", {
-                validateTrigger: ["onBlur"],
+              getFieldDecorator('dataName', {
+                validateTrigger: ['onBlur'],
                 rules: [
                   { required: true, message: '数据名称不能为空' },
                   { max: 64, message: '数据名称长度不能超过64' }
@@ -144,8 +144,8 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
           </Form.Item>
           <Form.Item label='数据描述'>
             {
-              getFieldDecorator("dataDescription", {
-                validateTrigger: ["onBlur"],
+              getFieldDecorator('dataDescription', {
+                validateTrigger: ['onBlur'],
                 rules: [
                   { required: true, message: '数据描述不能为空' },
                   { max: 100, message: '数据描述长度不能超过100' }
@@ -157,8 +157,8 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
           </Form.Item>
           <Form.Item label='数据用途'>
             {
-              getFieldDecorator("dataUse", {
-                validateTrigger: ["onBlur"],
+              getFieldDecorator('dataUse', {
+                validateTrigger: ['onBlur'],
                 rules: [
                   { required: true, message: '数据用途不能为空' },
                   { max: 64, message: '数据描述长度不能超过64' }
@@ -170,8 +170,8 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
           </Form.Item>
           <Form.Item label='所属系统'>
             {
-              getFieldDecorator("dataSource", {
-                validateTrigger: ["onBlur"],
+              getFieldDecorator('dataSource', {
+                validateTrigger: ['onBlur'],
                 rules: [
                   { required: true, message: '所属系统不能为空' },
                   { max: 64, message: '所属系统长度不能超过64' }
@@ -213,7 +213,7 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
   }
   public getCatalogList = async () => {
     try {
-      const { data, message, status } = await request.post("/collection/info/DirectoryRoot/listRootAndSupDirectory", {}, {
+      const { data, message, status } = await request.post('/collection/info/DirectoryRoot/listRootAndSupDirectory', {}, {
         loading: true,
         loadingTitle: '获取目录数据中……'
       });
@@ -227,7 +227,7 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
         Message.error(message);
       }
     } catch (e) {
-      throw Error(e);
+      console.log(e);
     }
   }
 
@@ -243,11 +243,11 @@ class FileForm extends React.Component<IFileFormProps, IFileFormState, any> {
 
   private getType(str: string) {
     switch (str) {
-      case "Bigint":
+      case 'Bigint':
         return 1;
-      case "Varchar":
+      case 'Varchar':
         return 2;
-      case "Double":
+      case 'Double':
         return 3;
       case 'Datetime':
         return 4;

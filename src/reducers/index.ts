@@ -1,6 +1,6 @@
-import { MofilyAction } from "../actions/index";
-import { IStoreType } from "../types";
-import { CHANGECURRENTROUTE, CHANGELOADING, CHANGELOADINGTITLE, CHANGESELECTLIST } from "../constants";
+import { MofilyAction } from '../actions/index';
+import { IStoreType } from '../types';
+import { CHANGECURRENTROUTE, CHANGELOADING, CHANGELOADINGTITLE, CHANGESELECTLIST } from '../constants';
 
 
 export default (state: IStoreType, action: MofilyAction): IStoreType => {

@@ -68,7 +68,7 @@ class EditableCell extends React.Component<any, any>{
       <Form.Item style={{ margin: 0 }}>
         {
           form.getFieldDecorator(dataIndex, {
-            validateTrigger: ["onChange"],
+            validateTrigger: ['onChange'],
             rules,
             initialValue: record[dataIndex]
           })(

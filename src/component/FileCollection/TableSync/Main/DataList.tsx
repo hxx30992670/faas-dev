@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Button, Table, Icon, Modal, message as Message } from "antd";
-import Detail from "src/component/FileCollection/TableSync/Detail";
+import { Button, Table, Icon, Modal, message as Message } from 'antd';
+import Detail from 'src/component/FileCollection/TableSync/Detail';
 import request from 'src/utils/Request';
-import TableHistory from "../History";
-import TableSyncEdit from "../Edit";
+import TableHistory from '../History';
+import TableSyncEdit from '../Edit';
 import style from './style.module.less';
 import { IPage } from './index';
 
@@ -54,7 +54,7 @@ class DataList extends Component<IDataListProps, IDataListState> {
         dataIndex: 'syncName',
         key: 'syncName',
         render: (value, row) => (
-          <Button type="link"
+          <Button type='link'
             onClick={this.showDetails.bind(this, row)}>{value}</Button>
         )
       },
@@ -134,7 +134,7 @@ class DataList extends Component<IDataListProps, IDataListState> {
         title: '历史执行',
         dataIndex: 'historyRun',
         render: (value, row) => (
-          <Button type="link" onClick={this.showHistory.bind(this, row)}>查看</Button>
+          <Button type='link' onClick={this.showHistory.bind(this, row)}>查看</Button>
         )
       },
       {
@@ -145,44 +145,44 @@ class DataList extends Component<IDataListProps, IDataListState> {
             <div style={{ display: 'flex' }}>
               {
                 row.status === 1 ?
-                  <Button type="link"
-                    size="small"
+                  <Button type='link'
+                    size='small'
                     style={{ color: 'rgb(244, 171, 55)' }}
                     title={'重试'}
                     onClick={this.startTableSync.bind(this, row)}
                   >
-                    <Icon type="undo"
+                    <Icon type='undo'
                       className={'bigSize'} />
                   </Button> : row.status === 2 ?
-                    <Button type="link"
-                      size="small"
+                    <Button type='link'
+                      size='small'
                       style={{ color: 'rgb(245, 108, 134)' }}
                       title={'停止'}
                       onClick={this.stopTableSync.bind(this, row)}
                     >
-                      <Icon type="stop"
+                      <Icon type='stop'
                         className={'bigSize'} />
                     </Button> :
                     row.status === 3 || row.status === 4 || row.status === 5 ?
-                      <Button type="link"
-                        size="small"
+                      <Button type='link'
+                        size='small'
                         style={{ color: 'rgb(39, 202, 142)' }}
                         title={'启动'}
                         onClick={this.startTableSync.bind(this, row)}
                       >
-                        <Icon type="play-circle"
+                        <Icon type='play-circle'
                           className={'bigSize'} />
                       </Button> : ''
               }
               {
                 row.status !== 2 ?
-                  <Button size="small"
-                    type="link"
+                  <Button size='small'
+                    type='link'
                     title={'编辑'}
                     style={{ color: '#4887ED' }}
                     onClick={this.editTable.bind(this, row)}
                   >
-                    <Icon type="edit"
+                    <Icon type='edit'
                       className={'bigSize'} />
                   </Button> : ''
               }
@@ -201,7 +201,7 @@ class DataList extends Component<IDataListProps, IDataListState> {
         <Table bordered={true}
           columns={columns}
           dataSource={this.props.dataList}
-          rowKey="id"
+          rowKey='id'
           pagination={{ ...pageSetting, position: 'bottom' }}
           rowSelection={rowSelection}
         />
@@ -234,7 +234,7 @@ class DataList extends Component<IDataListProps, IDataListState> {
       title: '启动库表同步',
       content: `是否确认启动${row.syncName}?`,
       okText: '确定',
-      icon: <Icon type="question" className={'bigSize'} />,
+      icon: <Icon type='question' className={'bigSize'} />,
       cancelText: '取消',
       onOk: () => {
         return new Promise(async (resolve, reject) => {

@@ -1,8 +1,8 @@
 import React, { ChangeEvent, Component } from 'react';
 import style from './style.module.less';
-import { Input, Icon, message as Message, Tree, Button, Modal } from "antd";
+import { Input, Icon, message as Message, Tree, Button, Modal } from 'antd';
 import request from 'src/utils/Request';
-import EditAndNew from "./EditAndNew";
+import EditAndNew from './EditAndNew';
 import EditChild from './NewChildCategory'
 
 const { TreeNode } = Tree;

@@ -2,7 +2,7 @@ import * as React from 'react';
 import style from './style.module.less';
 import moment from 'moment';
 import request from 'src/utils/Request';
-import {message as Message} from "antd";
+import {message as Message} from 'antd';
 
 export interface ILogsProps {
 	id: any,
@@ -36,18 +36,18 @@ class Logs extends React.Component<ILogsProps, ILogsState> {
 		return (
 			<div className={style.container}>
 				<div className={style.item}>
-					{moment(startTime).format("YYYY-MM-DD HH:mm:ss")} - 总数量： {num}
+					{moment(startTime).format('YYYY-MM-DD HH:mm:ss')} - 总数量： {num}
 				</div>
 				{
 					status === 0 ?
 						<div className={style.item} style={{color: '#27ca8e'}}>
-							{moment(createTime).format("YYYY-MM-DD HH:mm:ss")} 入库中 {area}
+							{moment(createTime).format('YYYY-MM-DD HH:mm:ss')} 入库中 {area}
 						</div> : status === 1 ?
 						<div className={style.item} style={{color: '#4887ed'}}>
-							{moment(createTime).format("YYYY-MM-DD HH:mm:ss")} {area} 成功
+							{moment(createTime).format('YYYY-MM-DD HH:mm:ss')} {area} 成功
 						</div> : status === 2 ?
 							<div className={style.item} style={{color: '#f56c86'}}>
-								{moment(createTime).format("YYYY-MM-DD HH:mm:ss")} {area} 失败
+								{moment(createTime).format('YYYY-MM-DD HH:mm:ss')} {area} 失败
 							</div> : ''
 				}
 			</div>

@@ -13,7 +13,7 @@ export default class App extends React.Component<IFileCollectionProps, IFileColl
   constructor(props) {
     super(props);
     this.state = {
-      activeTab: "1"
+      activeTab: '1'
     }
   }
 

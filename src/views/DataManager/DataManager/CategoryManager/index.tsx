@@ -1,7 +1,7 @@
 import * as React from 'react';
 import style from './style.module.less';
 import { Tabs } from 'antd';
-import DataCategory from "../../../../component/DataManager/CategoryManager/DataManager";
+import DataCategory from '../../../../component/DataManager/CategoryManager/DataManager';
 import ServiceCategory from 'src/component/DataManager/CategoryManager/ServiceManager';
 
 export interface ICategoryManagerProps {

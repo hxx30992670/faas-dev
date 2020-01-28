@@ -3,13 +3,13 @@ import style from './style.module.less';
 import {IPage} from 'src/views/DataManager/DataManager/DataList/index';
 import {Table, Button, Icon, Modal, message as Message} from 'antd';
 import {ColumnProps} from 'antd/es/table';
-import {connect} from "react-redux";
-import {IStoreType} from "src/types/index";
-import {Dispatch} from "redux";
-import {changeSelectList} from "src/actions";
+import {connect} from 'react-redux';
+import {IStoreType} from 'src/types/index';
+import {Dispatch} from 'redux';
+import {changeSelectList} from 'src/actions';
 import request from 'src/utils/Request';
 import Detail from '../Detail'
-import Logs from "../Logs";
+import Logs from '../Logs';
 
 export interface ITableListProps {
 	dataList: any[],

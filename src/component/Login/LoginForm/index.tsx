@@ -64,7 +64,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
             >
               {
                 getFieldDecorator('userName', {
-                  validateTrigger: ["onBlur"],
+                  validateTrigger: ['onBlur'],
                   rules: [
                     {
                       required: true,
@@ -89,7 +89,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
             >
               {
                 getFieldDecorator('password', {
-                  validateTrigger: ["onBlur"],
+                  validateTrigger: ['onBlur'],
                   rules: [
                     { required: true, message: '密码不为空' },
                     { max: 20, min: 4, message: '密码长度为6至20之间' },
@@ -112,7 +112,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
                       onPressEnter={this.submitLogin}
                     />
                     {
-                      this.state.code && <img src={this.state.code} alt="" onClick={this.getCode} />
+                      this.state.code && <img src={this.state.code} alt='' onClick={this.getCode} />
                     }
                   </div>
                 )
@@ -159,7 +159,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
         jsEncrypt.setPublicKey(this.state.publicKey);
         try {
 
-          const { status, data, message: msg } = await request.post("/usergroup/login/userLogin", {
+          const { status, data, message: msg } = await request.post('/usergroup/login/userLogin', {
             code: values.code,
             ctoken: this.state.cToken,
             name: values.userName,
@@ -169,7 +169,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
             LocalSave.saveSession('userInfo', data);
             const { mt } = data;
             console.log(mt);
-            if ((mt as string).startsWith("data_admin")) {
+            if ((mt as string).startsWith('data_admin')) {
               this.props.history.push('/data-manager');
             }
           } else {

@@ -153,7 +153,7 @@ export default class ResponseParams extends React.Component<IResponseParamsProps
 				render: (text, row) => (
 					<div>
 						<Button type='link' title={'新增'} onClick={this.addRow}>
-							<Icon type="plus"/>
+							<Icon type='plus'/>
 						</Button>
 						<Button type='link' title={'删除'} style={{color: 'red'}} onClick={this.removeRow.bind(this, row)}>
 							<Icon type={'delete'}/>

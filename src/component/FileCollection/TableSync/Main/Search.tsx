@@ -61,19 +61,19 @@ class Search extends Component<ISearchProps, ISearchState> {
 				</div>
 				<div className={style.right}>
 					<Button type={'primary'} title={'新增'} onClick={this.openNewTableSync}>
-						<Icon type="file-add" theme="filled" />
+						<Icon type='file-add' theme='filled' />
 					</Button>
 					<Button type='danger' title='删除' onClick={this.deleteRows}>
-						<Icon type="delete" theme="filled" />
+						<Icon type='delete' theme='filled' />
 					</Button>
 					<Button title={'刷新'} style={{ background: '#a1a7b3', borderColor: '#a1a7b3' }} onClick={this.props.resetHandler}>
-						<Icon type="redo" style={{ color: '#fff' }} />
+						<Icon type='redo' style={{ color: '#fff' }} />
 					</Button>
 					<Button title='启动' style={{ background: '#27ca8e', borderColor: '#27ca8e' }} onClick={this.startMoreTable}>
-						<Icon type="play-square" theme="filled" style={{ color: '#fff' }} />
+						<Icon type='play-square' theme='filled' style={{ color: '#fff' }} />
 					</Button>
 					<Button title='暂停' style={{ background: '#f4ab37', borderColor: '#f4ab37' }} onClick={this.stopMoreTable}>
-						<Icon type="pause-circle" theme="filled" style={{ color: '#fff' }} />
+						<Icon type='pause-circle' theme='filled' style={{ color: '#fff' }} />
 					</Button>
 				</div>
 				<Modal

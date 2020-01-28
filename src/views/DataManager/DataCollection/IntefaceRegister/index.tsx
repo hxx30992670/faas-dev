@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Tabs} from 'antd';
 import style from './style.module.less';
-import InterfaceForm from "../../../../component/FileCollection/InterfaceForm";
+import InterfaceForm from '../../../../component/FileCollection/InterfaceForm';
 
 export interface IInterfaceRegisterProps {
 }
